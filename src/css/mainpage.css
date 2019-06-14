@@ -8,11 +8,6 @@
 	max-width: 960px;
 }
 
-#wrapper>#container>.content {
-	margin-top: 10px;
-	display: flex;
-	flex-direction: row;
-}
 
 #wrapper>#container>.content>section {
 	max-width: 695px;

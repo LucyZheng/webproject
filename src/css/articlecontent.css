@@ -1,0 +1,39 @@
+.content{
+	background-color: white;
+	margin: auto;
+	max-width: 960px;
+	min-height: 500px;
+	border-radius: 8px;
+}
+.content>.title{
+	background: rgb(235,247,253);
+	height:30px;
+}
+.content>.title>span{
+	position: relative;
+	left: 15px;
+	top:5px;
+	font-weight: 600;
+	color:midnightblue;
+}
+.sign {
+	position: relative;
+	float: left;
+	border-radius: 20px;
+	background-color: darkslategray;
+	top:3px;
+	margin-right: 5px;
+}
+.sign>span {
+	color: white;
+	padding-left: 10px;
+	padding-right: 10px;
+	
+}
+.articletitle{
+	margin:15px;
+}
+.articlecontent{
+	margin:15px;
+	line-height: 22px;
+}

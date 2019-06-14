@@ -1,3 +1,9 @@
+/* 改变排列方向 */
+#wrapper>#container>.content {
+	margin-top: 10px;
+	display: flex;
+	flex-direction: row;
+}
 /* 文章列表 */
 #tinyimage {
 	width: 100px;
