@@ -15,74 +15,74 @@
 	margin-left: 10px;
 }
 /* 标签 */
-.labelcloud{
+.label-cloud{
 	margin-top:10px;
 	background-color:white ;
 }
-.labelcloud>.title{
+.label-cloud>.title{
 	font-weight: 600;
 	padding: 5px;
 	border-bottom:1px solid lightgray;
 }
-.labelcloud>.title>span{
+.label-cloud>.title>span{
 	color:rgb(75,0,130);
 	margin: 10px;
 }
 
-.labelcloud>.content>.labels{
+.label-cloud>.content>.labels{
 	margin-left:10px;
 	margin-top:5px;
 }
-.labelcloud>.content>.labels>span{
+.label-cloud>.content>.labels>span{
 	color: rgb(147,112,219);
 	font-size:small;
 	cursor: pointer;
 }
-.labelcloud>.content>.labels>span:hover{
+.label-cloud>.content>.labels>span:hover{
 	background-color: ghostwhite;
 	
 }
 
 /* 留言 */
-.latelycomment{
+.lately-comment{
 	margin-top:10px;
 	background-color:white ;
 	height: 210px;
 	overflow: hidden;
 }
-.latelycomment>.title{
+.lately-comment>.title{
 	font-weight: 600;
 	padding: 5px;
 	border-bottom:1px solid lightgray;
 }
-.latelycomment>.title>span{
+.lately-comment>.title>span{
 	color: darkslateblue;
 	margin: 10px;
 }
-.latelycomment>.content{
+.lately-comment>.content{
 	padding: 5px;
 	
 }
 #v1{
 	border-bottom: 1px dashed lightsteelblue;
 }
-.latelycomment>.content>.visitor{
+.lately-comment>.content>.visitor{
 	height: 70px;
 	padding: 5px;
 	font-size:smaller;
 	overflow: hidden;
 	padding-bottom: 8px;
 }
-.latelycomment>.content>.visitor>.name{
+.lately-comment>.content>.visitor>.name{
 	margin-bottom:5px;
 	color:rgb(4,177,204);
 }
-.latelycomment>.content>.visitor>.name>a{
+.lately-comment>.content>.visitor>.name>a{
 	color:rgb(4,177,204);
 	cursor: pointer;
 	text-decoration: none;
 }
-.latelycomment>.content>.visitor>.name>a:hover{
+.lately-comment>.content>.visitor>.name>a:hover{
 	text-decoration: underline;
 }
 

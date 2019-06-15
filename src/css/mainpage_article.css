@@ -10,14 +10,14 @@
 	height: 80px;
 }
 
-.allarticle {
+.all-article {
 	background-color: white;
 	margin-top: 10px;
 	padding: 15px;
 	display: block;
 }
 
-.allarticle:hover {
+.all-article:hover {
 	background-color: ghostwhite;
 }
 
@@ -33,16 +33,16 @@
 	background-color: ghostwhite;
 }
 
-.allarticle>header {
+.all-article>header {
 	margin: auto;
 }
 
-.allarticle>header>.sign {
+.all-article>header>.sign {
 	position: relative;
 	float: left;
 }
 
-.allarticle>header>.sign>span {
+.all-article>header>.sign>span {
 	color: white;
 	padding-left: 10px;
 	padding-right: 10px;
@@ -58,29 +58,29 @@
 	background-color: pink;
 }
 
-.allarticle>header>h3 {
+.all-article>header>h3 {
 	float: left;
 	margin-left: 10px;
 }
 
-.allarticle>section {
+.all-article>section {
 	margin-top: 30px;
 	overflow: auto;
 	height: 85px;
 	overflow: hidden;
 }
 
-.tinyarticle {
+.tiny-article {
 	color: darkgray;
 }
 
-.allarticle>section>img {
+.all-article>section>img {
 	max-width: 100px;
 	float: left;
 	margin-right: 10px;
 }
 
-.allarticle>footer {
+.all-article>footer {
 	margin-top: 5px;
 	text-align: right;
 }

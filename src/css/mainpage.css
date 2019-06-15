@@ -13,24 +13,24 @@
 	max-width: 695px;
 }
 
-#wrapper>#container>.content>section>.toparticle {
+#wrapper>#container>.content>section>.top-article {
 	background-color: white;
 }
 
 
 /* 置顶文章 */
-.toptitle,
+.top-title,
 .cont {
 	padding: 5px;
 }
 
-.toptitle {
+.top-title {
 	font-weight: 600;
 	border-bottom: 1px solid lightgray;
 	padding-bottom: 10px;
 }
 
-.texttitle {
+.text-title {
 	color: darkblue;
 	margin-left: 10px;
 }
@@ -40,7 +40,7 @@
 	margin: 7px;
 }
 
-.art>.arttitle>span {
+.art>.art-title>span {
 	display: inline-block;
 	width: 20px;
 	color: white;
@@ -67,15 +67,15 @@
 	background-color: orange;
 }
 
-.arttitle {
+.art-title {
 	float: left;
 }
 
-.arttitle>a {
+.art-title>a {
 	text-decoration: none;
 }
 
-.arttitle>a:hover {
+.art-title>a:hover {
 	color: royalblue;
 	text-decoration: underline;
 }

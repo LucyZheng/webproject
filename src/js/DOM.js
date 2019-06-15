@@ -4,10 +4,10 @@ class Mainpage{
 	btnMore.addEventListener("click", this.loadMore, false);}
     //获取更多日志
     loadMore(){
-        var articlelist = document.querySelector(".articlelist");
+        var articlelist = document.querySelector(".article-list");
         //TODO:Use requestHTML to acquire content
 		var artstr =
-			'<article class="allarticle" id="next">\
+			'<article class="all-article" id="next">\
 								<header>\
 									<div class="sign">\
 										<span id="sign2">转载</span>\
@@ -17,19 +17,18 @@ class Mainpage{
 								</header>\
 								<section>\
 									<img src="img/lengtu.jpg" id="tinyimage">\
-									<div class="tinyarticle">\
+									<div class="tiny-article">\
 										意大利面真好吃。\
 									</div>\
 								</section>\
 								<footer>\
 									<img src="img/time_gray.png" /> 2019-6-13 22:00\
 									<img src="img/eye_gray.png" /> 22\
-									<img src="img/comment_gray.png" /> <span class="commentCount">6</span>\
-									<img src="img/fabulous_gray.png" /> <span class="fabulousCount">5</span>\
+									<img src="img/comment_gray.png" /> <span class="comment-count">6</span>\
+									<img src="img/fabulous_gray.png" /> <span class="fabulous-count">5</span>\
 								</footer>\
 							</article>';
 		articlelist.insertAdjacentHTML("afterend", artstr);
-        articlelist.insertAdjacentHTML("afterend", artstr);
         // 分享模块
         var imgs = document.querySelectorAll("#container .content>aside .shareclick img");
         for (var i = 0; i < imgs.length; i++) {

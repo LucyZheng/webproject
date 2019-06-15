@@ -108,7 +108,7 @@
 	padding-bottom: 30px;
 	border-bottom: 1px dashed powderblue ;
 }
-.comment-content>.single-comment>.personal-commentinf>#personal-icon{
+.personal-icon{
 	width:100px;
 	height:100px;
 }
@@ -116,6 +116,7 @@
 	font-size: small;
 	margin-top: 5px;
 	text-decoration: none;
+	color:rgb(70,130,180);
 }
 .comment-content>.single-comment>.personal-commentinf>.personal-name>a:hover{
 	text-decoration: underline;
@@ -123,6 +124,7 @@
 .single-comment>.personal-commentinf>.personal-name{
 	position: relative;
 	top:5px;
+	
 }
 .comment-content>.single-comment>.personal-comment{
 	margin-left: 20px;
@@ -143,4 +145,37 @@
 }
 .personal-comment-content{
 	font-size: 0.9em;
+}
+
+/* 发表评论 */
+.write-comment{
+	margin:10px;
+	padding:10px;
+}
+.my-comment{
+	display: flex;
+	flex-direction: row;
+}
+.write-comment>.title{
+	margin-bottom:15px;
+	font-size: small;
+	font-weight: 600;
+}
+.write-block{
+	display: flex;
+	flex-direction: column;
+	margin-left:10px;
+}
+.write-block>button{
+	height:30px;
+	width:60px;
+	font-size: 0.9em;
+	background-color:skyblue;
+	color:white;
+	border:0;
+	border-radius: 5px;
+	cursor: pointer;
+}
+.write-block>button:hover{
+	background-color:lightblue;
 }
