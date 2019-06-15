@@ -36,21 +36,6 @@ window.onload = function() {
 			goShare(this.alt);
 		}, false);
 	}
-	function goShare(s) {
-		var title = document.querySelector("title").innerText;
-		var desc = document.querySelector("meta[name=description]").content;
-		//qq空间接口
-		if (s == 'qzone')
-			window.open('https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=' + document.location.href +
-				'?sharesource=qzone&title=' + title + '&summary=' + desc);
-		if (s == 'sina')
-			window.open('http://service.weibo.com/share/share.php?url=' + document.location.href + '?sharesource=weibo&title=' +
-				title);
-		if (s == 'qq')
-			window.open('http://connect.qq.com/widget/shareqq/index.html?url=' + document.location.href +
-				'?sharesource=qzone&title=' + title + '&summary=' + desc);
-	}
-	
 	// var labels=document.querySelectorAll(".labelcloud>.content>.labels>span");
 	// for(var i=0;i<labels.length;i++){
 	// 	var r=Math.random()*255;
@@ -58,5 +43,19 @@ window.onload = function() {
 	// 	var b=Math.random()*255;
 	// 	labels[i].setAttribute("style","background-color:rgba("+r+","+g+","+b+","+0.5+")");
 	// }
+}
 
+function goShare(s) {
+	var title = document.querySelector("title").innerText;
+	var desc = document.querySelector("meta[name=description]").content;
+	//qq空间接口
+	if (s == 'qzone')
+		window.open('https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=' + document.location.href +
+			'?sharesource=qzone&title=' + title + '&summary=' + desc);
+	if (s == 'sina')
+		window.open('http://service.weibo.com/share/share.php?url=' + document.location.href + '?sharesource=weibo&title=' +
+			title);
+	if (s == 'qq')
+		window.open('http://connect.qq.com/widget/shareqq/index.html?url=' + document.location.href +
+			'?sharesource=qzone&title=' + title + '&summary=' + desc);
 }
