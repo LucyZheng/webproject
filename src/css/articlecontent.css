@@ -1,15 +1,14 @@
-.content{
+.subcontent-aricle{
 	background-color: white;
 	margin: auto;
 	max-width: 960px;
-	min-height: 500px;
 	border-radius: 8px;
 }
-.content>.title{
+.subcontent-aricle>.title{
 	background: rgb(235,247,253);
 	height:30px;
 }
-.content>.title>span{
+.subcontent-aricle>.title>span{
 	position: relative;
 	left: 15px;
 	top:5px;
@@ -30,10 +29,118 @@
 	padding-right: 10px;
 	
 }
-.articletitle{
+.article-title{
 	margin:15px;
 }
-.articlecontent{
+/* 按键操作行 */
+.article-content{
 	margin:15px;
 	line-height: 22px;
+	min-height: 300px;
+}
+.button-list{
+	display: flex;
+	flex-direction: row;
+	white-space:nowrap;
+	
+}
+.button-list>.like,.button-list>.comment,.button-list>.last-article,.button-list>.next-article{
+	width:70px;
+	margin-left:25px;
+	padding: 5px;
+	
+}
+.button-list>.like{border-right:1px solid powderblue;}
+.button-list>.like>span,.button-list>.comment>span,.button-list>.last-article>span,.button-list>.next-article>span{
+	margin-left: 10px;
+	position: relative;
+	top:-3px;
+	font-size: 0.8em;
+	cursor:pointer;
+}
+.button-list>.last-article{
+	margin-left: auto;
+    margin-right: 10px;
+	
+	
+}
+.button-list>.like>span:hover,.button-list>.comment>span:hover,.button-list>.last-article>span:hover,.button-list>.next-article>span:hover{
+	color:darkgray;
+}
+.button-list>.next-article{
+	margin-left: initial;
+	margin-right: 20px;
+	border-left: 1px solid powderblue;
+}
+.button-list>.next-article>img{
+	margin-left:10px;
+}
+
+/* 评论区 */
+.subcontent-aricle>.comment{
+	min-height: 100px;
+	padding:10px;
+}
+.subcontent-aricle>.comment>.comment-title{
+	border-bottom:1px solid powderblue;
+}
+.subcontent-aricle>.comment>.comment-title>span{
+	font-size: 0.8em;
+	border-top: 1px solid powderblue;
+	border-left: 1px solid powderblue;
+	border-right: 1px solid powderblue;
+	border-bottom: 1px solid white;
+	padding-left:10px;
+	padding-top:3px;
+	padding-right: 10px;
+	position: relative;
+	top:1px;
+	border-top-left-radius:5px ;
+	border-top-right-radius:5px ;
+}
+.subcontent-aricle>.comment>.comment-content{
+	margin-top:20px;
+}
+.comment-content>.single-comment{
+	display: flex;
+	flex-direction: row;
+	padding:10px;
+	padding-bottom: 30px;
+	border-bottom: 1px dashed powderblue ;
+}
+.comment-content>.single-comment>.personal-commentinf>#personal-icon{
+	width:100px;
+	height:100px;
+}
+.comment-content>.single-comment>.personal-commentinf>.personal-name>a{
+	font-size: small;
+	margin-top: 5px;
+	text-decoration: none;
+}
+.comment-content>.single-comment>.personal-commentinf>.personal-name>a:hover{
+	text-decoration: underline;
+}
+.single-comment>.personal-commentinf>.personal-name{
+	position: relative;
+	top:5px;
+}
+.comment-content>.single-comment>.personal-comment{
+	margin-left: 20px;
+}
+.floor{
+	position: relative;
+	top:-5px;
+}
+.floor>span{
+	font-size:small;
+}
+.floor>#floor-count{
+	font-weight: 600;
+	margin-right:10px;
+}
+.floor>#comment-time,.floor>#comment-time>span{
+	color:darkgray;
+}
+.personal-comment-content{
+	font-size: 0.9em;
 }
