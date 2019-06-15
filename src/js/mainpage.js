@@ -30,19 +30,13 @@ window.onload = function() {
 	}, false);
 	
 	// 分享模块
+	//TODO:考虑使用事件委托提升性能
 	var imgs = document.querySelectorAll("#container .content>aside .shareclick img");
 	for (var i = 0; i < imgs.length; i++) {
 		imgs[i].addEventListener("click", function() {
 			goShare(this.alt);
 		}, false);
 	}
-	// var labels=document.querySelectorAll(".labelcloud>.content>.labels>span");
-	// for(var i=0;i<labels.length;i++){
-	// 	var r=Math.random()*255;
-	// 	var g=Math.random()*255;
-	// 	var b=Math.random()*255;
-	// 	labels[i].setAttribute("style","background-color:rgba("+r+","+g+","+b+","+0.5+")");
-	// }
 }
 
 function goShare(s) {
