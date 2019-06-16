@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>相册详情</title>
+		<link rel="stylesheet" type="text/css" href="css/common.css">
+		<link rel="stylesheet" type="text/css" href="css/mainpage.css">
+		<link rel="stylesheet" type="text/css" href="css/mainpage_header.css">
+		<link rel="stylesheet" type="text/css" href="css/album.css">
+		<meta name="Description" content="666的博客,心随你动!" />
+
+
+	</head>
+	<body>
+		<div id="wrapper">
+			<header>
+				<div id="header-text">
+					<h1>游呢娃子的博客</h1>
+					<div id="signature">这个人很懒，什么都没有说。</div>
+				</div>
+			</header>
+			<nav>
+				<ul>
+					<li class="first-page"><a href="#">主页</a></li>
+					<li><a href="#">日志</a></li>
+					<li><a href="#">相册</a></li>
+					<li><a href="#">留言板</a></li>
+					<li><a href="#">我的访客</a></li>
+					<button type="button"></button>
+				</ul>
+
+			</nav>
+			<div id="container">
+				<div class="flytext">
+					<img src="img/widespread.png" />
+					<marquee behavior="scroll" direction="left">
+						这是用来测试的无意义的一句话啦啦啦。
+					</marquee>
+				</div>
+				<div class="subalbum">
+					<div class="title">
+						<span>相册详情</span>
+					</div>
+					<div class="album-content">
+						<div class="album-header">
+							<div class="cover"><img src="img/lengtu3.jpg" class="cover"></div>
+							<div class="album-inf">
+								<div class="album-title">我的相册</div>
+								<button type="button" class="add-photos">
+									添加照片
+								</button>
+							</div>
+							<div class="album-stat">
+								<div class="album-comment">
+									<div class="comment-title">评论</div>
+									<div class="comment-count">0</div>
+								</div>
+								<div class="album-like">
+									<div class="like-title">赞</div>
+									<div class="like-count">0</div>
+								</div>
+							</div>
+						</div>
+						<ul class="photo-list">
+							<li class="single-photo-inf" id="single-photo-inf-0" onmouseover="over(this.id)" onmouseout="out(this.id)">
+								<a href="#">
+									<img class="single-photo" src="img/lengtu.jpg" width="150" height="150">
+								</a>
+								<div class="photo-operation" id="photo-operation-0">
+									<img class="like-icon" src="img/good_32px.png">
+									<img class="comment-icon" src="img/comment_32px.png">
+									<span class="photo-reblog">转载</span>
+								</div>
+								<div class="photo-description">冷兔宝宝超可爱</div>
+							</li>
+
+						</ul>
+					</div>
+					<!-- 换页 -->
+					<div class="pagi">
+						<ul class="pagination">
+							<li><a href="#">«</a></li>
+							<li><a href="#" class="active">1</a></li>
+							<li><a href="#">2</a></li>
+							<li><a href="#">3</a></li>
+							<li><a href="#">4</a></li>
+							<li><a href="#">5</a></li>
+							<li><a href="#">6</a></li>
+							<li><a href="#">7</a></li>
+							<li><a href="#">»</a></li>
+						</ul>
+					</div>
+				</div>
+
+			</div>
+			<footer>&copy;2019-2030 啦啦啦</footer>
+		</div>
+	</body>
+	<script type="text/javascript">
+		var sourceNode = document.getElementById("single-photo-inf-0");
+		for (var i = 1; i < 10; i++) {
+			var clonedNode = sourceNode.cloneNode(true);
+			clonedNode.setAttribute("id", "single-photo-inf-" + i);
+			clonedNode.childNodes[3].id = "photo-operation-" + i;
+			sourceNode.parentNode.appendChild(clonedNode);
+		}
+
+		function over(id) {
+			var index = id.substr(id.length - 1, 1);
+			document.getElementById("photo-operation-" + index).style.visibility = "visible";
+		}
+
+		function out(id) {
+			var index = id.substr(id.length - 1, 1);
+			document.getElementById("photo-operation-" + index).style.visibility = "hidden";
+		}
+	</script>
+</html>
