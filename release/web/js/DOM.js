@@ -1,9 +1,11 @@
+import {getHTML} from "htmlResolver";
 //MainPage
 class MainPage{
     constructor(){
         this.title = document.querySelector("title").innerText;
         this.desc = document.querySelector("meta[name=description]").content;
         this.articleList = document.querySelector(".article-list");
+        this.articleCount = 4;
         this.btnMore = document.getElementById("moreclick");
 	    this.btnMore.addEventListener("click", this.loadMore, false);
         // 分享模块
@@ -18,29 +20,14 @@ class MainPage{
     //获取更多日志
     loadMore(){
         //TODO:Use requestHTML to acquire content
-		let artstr =
-			'<article class="all-article" id="next">\
-								<header>\
-									<div class="sign">\
-										<span id="sign2">转载</span>\
-										<div></div>\
-									</div>\
-									<h3><a href="#">二营长，来碗意大利面</a></h3>\
-								</header>\
-								<section>\
-									<img src="img/lengtu.jpg" id="tinyimage">\
-									<div class="tiny-article">\
-										意大利面真好吃。\
-									</div>\
-								</section>\
-								<footer>\
-									<img src="img/time_gray.png" /> 2019-6-13 22:00\
-									<img src="img/eye_gray.png" /> 22\
-									<img src="img/comment_gray.png" /> <span class="comment-count">6</span>\
-									<img src="img/fabulous_gray.png" /> <span class="fabulous-count">5</span>\
-								</footer>\
-							</article>';
+        let params = {
+            "mode": 1,
+            "from": this.articleCount,
+            "count": 4
+        };
+		let artstr = getHTML('/template/mainpage_article_list.jsp', params);
 		this.articleList.insertAdjacentHTML("afterend", artstr);
+		this.articleCount += 4;
     }
 
     goShare(s){

@@ -7,6 +7,7 @@
   String headSignature = "这个人很懒，什么都没有说。";
   String flybyText = "这是用来测试的无意义的一句话啦啦啦。";
   //TODO: Acquire top articles from database
+  //从数据库中取出置顶文章，放入以下形式的List中
   List<Map<String, String> > topArticle = new ArrayList<>();
   for (int i = 0;i < 4;i ++) {
     Map<String, String> stringMap = new HashMap<>();
@@ -18,12 +19,14 @@
   }
   pageContext.setAttribute("topArticle", topArticle);
   //TODO: Acquire tag clouds from database
+  //从数据库中取出标签，放入以下形式的List中
   List<String> tag = new ArrayList<>();
   for (int i = 1;i < 10;i ++){
     tag.add("#" + new String(new char[i]).replace("\0","字"));
   }
   pageContext.setAttribute("tag", tag);
   //TODO: Acquire article list from database
+  //从数据库中取出前k篇文章，放入以下形式的List中
   List<Map<String, String> > mainArticle = new ArrayList<>();
   for (int i = 0;i < 4;i ++) {
     Map<String, String> stringMap = new HashMap<>();
@@ -39,6 +42,7 @@
   }
   pageContext.setAttribute("mainArticle", mainArticle);
   //TODO: Acquire comment from database
+  //从数据库中取出前j条评论，放入以下形式的List中
   List<Map<String, String> > comment = new ArrayList<>();
   for (int i = 0;i < 5;i ++){
     Map<String, String> stringMap = new HashMap<>();

@@ -17,26 +17,6 @@ typora-copy-images-to: ./img
 - 红框：动态加载(填入HTML)
 - 绿框：静态加载(预编写HTML，填写内容)
 
-### 架构与接口说明
-
-#### 前后端分离
-
-结构遵循前后端分离逻辑，HTML和JSP分开，JSP仅提供数据接口作用，不具备任何实体化的DOM结构。
-
-#### RESTful接口
-
-- 使用URI指代资源
-- 使用HTTP方法指代动作
-  - GET：读取
-  - POST：新建
-  - PUT：更新
-  - DELETE：删除
-- 使用查询字符串指代过滤条件
-
-#### 类封装
-
-每个页面的接口封装到一个类中，页面加载时需要执行的工作放在类的constructor中，并在页面加载完成后初始化这个类。
-
 ###　命名规范
 
 #### HTML/CSS
@@ -56,6 +36,14 @@ typora-copy-images-to: ./img
 ### DOM(DOM.js)
 
 #### 主页(class Mainpage)
+
+##### loadTop()
+
+获取置顶文章
+
+##### loadTag()
+
+获取标签云
 
 ##### loadMore()
 
@@ -95,16 +83,34 @@ s：enum{"qzone","sina","qq"}
 
 ## 后端接口定义
 
-### 提供
+### 模板(/templates)
+
+#### 主页日志列表(/templates/mainpage_article_list.jsp)
+
+##### Request
+
+- mode：获取模式
+  - 0：获取全部日志
+  - 1：从第from篇获取count篇
+  - 2：获取标题含有topic字符串的日志(from和count依然有效)
+- from (not required in mode 0)
+- count (not required in mode 0)
+- topic(mode 2 only)
+
+##### Response
+
+HTML内容
+
+### 日志
 
 
 
-### 接收
+### 照片
 
 ## 数据库定义
 
 
 
-## 附录：URI集合
+## 附录：URI
 
  

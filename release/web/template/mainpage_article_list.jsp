@@ -6,6 +6,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="mainpage" tagdir="/WEB-INF/tags" %>
 <%
+    int mode = Integer.parseInt(request.getParameter("mode"));
     //TODO: Acquire article list from database
     List<Map<String, String>> mainArticle = new ArrayList<>();
     for (int i = 0;i < 4;i ++) {
