@@ -6,10 +6,49 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="java.util.*" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="mainpage" tagdir="/WEB-INF/tags" %>
 <%
     String headTitle = "游呢娃子的博客";
     String headSignature = "这个人很懒，什么都没有说。";
     String flybyText = "这是用来测试的无意义的一句话啦啦啦。";
+    int currentPage = 1;
+    if (request.getParameter("page") != null){
+        currentPage = Integer.parseInt(request.getParameter("page"));
+    }
+
+    //TODO: Acquire blog from database
+    //获取文章的篇数
+    int blogCount = 50;
+    //每页显示10篇
+    int pageCount = (int)Math.ceil(blogCount / 10.0);
+    if (currentPage <= 0)
+        currentPage = 1;
+    else if (currentPage > pageCount)
+        currentPage = pageCount;
+    pageContext.setAttribute("currentPage", currentPage);
+    pageContext.setAttribute("pageCount", pageCount);
+    //生成
+    //从数据库中取出前k篇文章，放入以下形式的List中
+    List<Map<String, String> > mainArticle = new ArrayList<>();
+    for (int i = 0;i < 10;i ++) {
+        Map<String, String> stringMap = new HashMap<>();
+        stringMap.put("sign", "原创");
+        stringMap.put("title", "测试" + i);
+        stringMap.put("time", "2019-06-01 23:00");
+        stringMap.put("readCount", Integer.toString(i));
+        stringMap.put("commentCount", Integer.toString(i));
+        stringMap.put("fabulousCount", Integer.toString(i));
+        mainArticle.add(stringMap);
+    }
+    pageContext.setAttribute("mainArticle", mainArticle);
+    //TODO: Acquire tag clouds from database
+    List<String> tag = new ArrayList<>();
+    for (int i = 1;i < 10;i ++){
+        tag.add("#" + new String(new char[i]).replace("\0","字"));
+    }
+    pageContext.setAttribute("tag", tag);
 %>
 <!DOCTYPE html>
 <html>
@@ -59,52 +98,25 @@
                 </div>
                 <button type="button" id="write-article">写日志</button>
                 <ul class="article-list">
-                    <li class="single-article">
-                        <div class="article-title">小朋友要有小朋友的亚子</div>
-                        <div class="article-date">2019-6-16</div>
-                        <div class="article-stat">
-                            (<span class="comment-count">2</span>/<span class="read-count">10</span>)
-                        </div>
-                        <div class="article-operation">
-                            <span class="article-delete">删除</span>
-                            <span class="article-ontop">置顶</span>
-                        </div>
-                    </li>
-                    <li class="single-article">
-                        <div class="article-title">好好读术</div>
-                        <div class="article-date">2019-6-19</div>
-                        <div class="article-stat">
-                            (<span class="comment-count">3</span>/<span class="read-count">11</span>)
-                        </div>
-                        <div class="article-operation">
-                            <span class="article-delete">删除</span>
-                            <span class="article-ontop">置顶</span>
-                        </div>
-                    </li>
-                    <li class="single-article">
-                        <div class="article-title">补药多管闲事</div>
-                        <div class="article-date">2019-6-20</div>
-                        <div class="article-stat">
-                            (<span class="comment-count">4</span>/<span class="read-count">12</span>)
-                        </div>
-                        <div class="article-operation">
-                            <span class="article-delete">删除</span>
-                            <span class="article-ontop">置顶</span>
-                        </div>
-                    </li>
+                    <c:forEach items="${mainArticle}" var="i">
+                        <mainpage:BlogListItem
+                                sign="${i.get(\"sign\")}"
+                                title="${i.get(\"title\")}"
+                                time="${i.get(\"time\")}"
+                                readCount="${i.get(\"readCount\")}"
+                                commentCount="${i.get(\"commentCount\")}"
+                                fabulousCount="${i.get(\"fabulousCount\")}"
+                        ></mainpage:BlogListItem>
+                    </c:forEach>
                 </ul>
                 <!-- 换页 -->
                 <div class="pagi">
                     <ul class="pagination">
-                        <li><a href="#">«</a></li>
-                        <li><a href="#"class="active">1</a></li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">4</a></li>
-                        <li><a href="#">5</a></li>
-                        <li><a href="#">6</a></li>
-                        <li><a href="#">7</a></li>
-                        <li><a href="#">»</a></li>
+                        <li><a href="article_list.jsp?page=${currentPage - 1}">«</a></li>
+                            <c:forEach var="i" begin="1" end="${pageCount}">
+                                <li><a href="article_list.jsp?page=${i}">${i}</a></li>
+                            </c:forEach>
+                        <li><a href="article_list.jsp?page=${currentPage + 1}">»</a></li>
                     </ul>
                 </div>
 
@@ -116,16 +128,11 @@
                         <span>标签云</span>
                     </div>
                     <div class="content">
-                        <div class="labels">
-                            <span>#打码好难</span>
-                        </div>
-                        <div class="labels">
-                            <span>#不想打了</span>
-                        </div>
-                        <div class="labels">
-                            <span>#什么时候才能做完鸭</span>
-                        </div>
-
+                        <c:forEach items="${tag}" var="i">
+                            <div class="labels">
+                                <span>${i}</span>
+                            </div>
+                        </c:forEach>
                     </div>
                 </div>
             </aside>

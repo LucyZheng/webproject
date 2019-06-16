@@ -64,8 +64,10 @@
   <link rel="stylesheet" type="text/css" href="css/mainpage_article.css">
   <link rel="stylesheet" type="text/css" href="css/mainpage_aside.css">
   <meta name="description" content="666的博客,心随你动!"/>
-  <script src="js/DOM.js" type="text/javascript" charset="utf-8"></script>
-  <script>
+  <script src="js/DOM.js" type="module" charset="utf-8"></script>
+  <script src="js/htmlResolver.js" type="module" charset="utf-8"></script>
+  <script type="module">
+    import {MainPage} from "/js/DOM.js";
     var mainpage;
     window.onload = function(){mainpage = new MainPage();}
   </script>
@@ -133,7 +135,7 @@
           </c:forEach>
         </div>
         <div class="more">
-          <button type="button" id="moreclick" onclick="mainpage.loadMore()">点击加载更多...</button>
+          <button type="button" id="moreclick">点击加载更多...</button>
         </div>
       </section>
       <!-- 右边栏 -->

@@ -1,13 +1,13 @@
-import {getHTML} from "htmlResolver";
+import {getHTML} from "./htmlResolver.js";
 //MainPage
-class MainPage{
+export class MainPage{
     constructor(){
         this.title = document.querySelector("title").innerText;
         this.desc = document.querySelector("meta[name=description]").content;
         this.articleList = document.querySelector(".article-list");
         this.articleCount = 4;
         this.btnMore = document.getElementById("moreclick");
-	    this.btnMore.addEventListener("click", this.loadMore, false);
+	    this.btnMore.addEventListener("click", this.loadMore.bind(this), false);
         // 分享模块
         let imgs = document.querySelectorAll("#container .content>aside .shareclick img");
         for (let i = 0; i < imgs.length; i++) {
@@ -19,16 +19,29 @@ class MainPage{
 
     //获取更多日志
     loadMore(){
-        //TODO:Use requestHTML to acquire content
         let params = {
             "mode": 1,
             "from": this.articleCount,
             "count": 4
         };
-		let artstr = getHTML('/template/mainpage_article_list.jsp', params);
-		this.articleList.insertAdjacentHTML("afterend", artstr);
-		this.articleCount += 4;
+		getHTML(this,'/template/mainpage_article_list.jsp', params, (data) => {
+            this.articleList.insertAdjacentHTML("afterend", data);
+            this.articleCount += 4;
+        });
+
     }
+
+    //搜索日志
+    search(topic){
+        let params = {
+            "mode": 2,
+            "topic": topic
+        };
+        getHTML(this, '/template/mainpage_article_list.jsp', params, (data) => {
+            this.articleList.innerHTML = data;
+        })
+    }
+
 
     goShare(s){
         //qq空间接口
