@@ -7,14 +7,27 @@
   String headSignature = "这个人很懒，什么都没有说。";
   String flybyText = "这是用来测试的无意义的一句话啦啦啦。";
   //TODO: Acquire top articles from database
-
+  List<Map<String, String> > topArticle = new ArrayList<>();
+  for (int i = 0;i < 4;i ++) {
+    Map<String, String> stringMap = new HashMap<>();
+    stringMap.put("sign", "顶");
+    stringMap.put("title", "测试" + i);
+    stringMap.put("commentCount", Integer.toString(i));
+    stringMap.put("fabulousCount", Integer.toString(i));
+    topArticle.add(stringMap);
+  }
+  pageContext.setAttribute("topArticle", topArticle);
   //TODO: Acquire tag clouds from database
-
+  List<String> tag = new ArrayList<>();
+  for (int i = 1;i < 10;i ++){
+    tag.add("#" + new String(new char[i]).replace("\0","字"));
+  }
+  pageContext.setAttribute("tag", tag);
   //TODO: Acquire article list from database
   List<Map<String, String> > mainArticle = new ArrayList<>();
   for (int i = 0;i < 4;i ++) {
     Map<String, String> stringMap = new HashMap<>();
-    stringMap.put("sign", "置顶");
+    stringMap.put("sign", "原创");
     stringMap.put("title", "测试" + i);
     stringMap.put("img", "img/lengtu.jpg");
     stringMap.put("article", "这是第" + i + "篇文章");
@@ -26,14 +39,21 @@
   }
   pageContext.setAttribute("mainArticle", mainArticle);
   //TODO: Acquire comment from database
-
+  List<Map<String, String> > comment = new ArrayList<>();
+  for (int i = 0;i < 5;i ++){
+    Map<String, String> stringMap = new HashMap<>();
+    stringMap.put("name", "志儒" + i + "号");
+    stringMap.put("message", "我永远喜欢李新锐");
+    comment.add(stringMap);
+  }
+  pageContext.setAttribute("comment", comment);
 %>
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-  <title>游呢娃子的博客</title>
+  <title><%=headTitle%></title>
   <link rel="stylesheet" type="text/css" href="css/common.css">
   <link rel="stylesheet" type="text/css" href="css/mainpage.css">
   <link rel="stylesheet" type="text/css" href="css/mainpage_header.css">
@@ -58,8 +78,8 @@
   <!-- 导航条 -->
   <nav>
     <ul>
-      <li class="first-page"><a href="#">主页</a></li>
-      <li><a href="#">日志</a></li>
+      <li class="first-page"><a href="/">主页</a></li>
+      <li><a href="/blog">日志</a></li>
       <li><a href="#">相册</a></li>
       <li><a href="#">留言板</a></li>
       <li><a href="#">我的访客</a></li>
@@ -84,7 +104,13 @@
             <div class="text-title">置顶文章</div>
           </div>
           <div class="cont">
-
+            <c:forEach items="${topArticle}" var="i">
+              <mainpage:TopArticle
+                      sign="${i.get(\"sign\")}"
+                      title="${i.get(\"title\")}"
+                      commentCount="${i.get(\"commentCount\")}"
+                      fabulousCount="${i.get(\"fabulousCount\")}"></mainpage:TopArticle>
+            </c:forEach>
           </div>
         </div>
         <!-- 文章列表 -->
@@ -118,16 +144,11 @@
             <span>标签云</span>
           </div>
           <div class="content">
-            <div class="labels">
-              <span>#打码好难</span>
-            </div>
-            <div class="labels">
-              <span>#不想打了</span>
-            </div>
-            <div class="labels">
-              <span>#什么时候才能做完鸭</span>
-            </div>
-
+            <c:forEach items="${tag}" var="i">
+              <div class="labels">
+                <span>${i}</span>
+              </div>
+            </c:forEach>
           </div>
         </div>
         <div class="lately-comment">
@@ -135,7 +156,11 @@
             <span>最新留言</span>
           </div>
           <div class="content">
-
+            <c:forEach items="${comment}" var="i">
+              <mainpage:LatelyComment
+                      name="${i.get(\"name\")}"
+                      message="${i.get(\"message\")}"></mainpage:LatelyComment>
+            </c:forEach>
           </div>
         </div>
         <div class="album">
