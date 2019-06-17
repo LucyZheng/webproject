@@ -6,3 +6,4 @@ body{
 	padding:0;
 	color:hsl(240,0%,30%);
 }
+input,button,select,textarea{outline:none;}
