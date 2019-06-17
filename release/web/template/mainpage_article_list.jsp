@@ -1,15 +1,35 @@
 <%@ page import="java.util.Map" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.List" %>
-<%@ page import="java.util.HashMap" %>
+<%@ page import="java.util.HashMap,java.sql.*" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="mainpage" tagdir="/WEB-INF/tags" %>
 <%
+    String connectString = "jdbc:mysql://172.18.35.96:3306/myblogdb?autoReconnect=true&useUnicode=true&characterEncoding=UTF-8";
+    Class.forName("com.mysql.jdbc.Driver");
+    Connection connect = DriverManager.getConnection(connectString, "root", "zhuzhiru");
+    Statement stmt = connect.createStatement();
+
     int mode = Integer.parseInt(request.getParameter("mode"));
     //TODO: Acquire article list from database
     List<Map<String, String>> mainArticle = new ArrayList<>();
-    for (int i = 0;i < 4;i ++) {
+    ResultSet result = stmt.executeQuery("select * from Blog");
+    while (result.next()) {
+        Map<String, String> map = new HashMap<>();
+        int sign = result.getInt("sign");
+        if (sign == 0)
+            map.put("sign", "置顶");
+        map.put("title", result.getString("title"));
+        map.put("img", result.getString("img"));
+        map.put("article", result.getString("content"));
+        map.put("time", result.getString("time"));
+        map.put("readCount", result.getString("pageviews"));
+        map.put("commentCount", result.getString("commentCount"));
+        map.put("fabulousCount", result.getString("likeCount"));
+        mainArticle.add(map);
+    }
+    /*for (int i = 0;i < 4;i ++) {
         Map<String, String> stringMap = new HashMap<>();
         stringMap.put("sign", "置顶");
         stringMap.put("title", "测试" + i);
@@ -20,7 +40,7 @@
         stringMap.put("commentCount", Integer.toString(i));
         stringMap.put("fabulousCount", Integer.toString(i));
         mainArticle.add(stringMap);
-    }
+    }*/
     pageContext.setAttribute("mainArticle", mainArticle);
 %>
 <c:forEach items="${mainArticle}" var="i">
