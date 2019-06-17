@@ -1,4 +1,4 @@
-<%@ page import="java.util.*" %>
+<%@ page import="java.util.*,java.sql.*" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="mainpage" tagdir="/WEB-INF/tags" %>
@@ -6,50 +6,97 @@
   String headTitle = "游呢娃子的博客";
   String headSignature = "这个人很懒，什么都没有说。";
   String flybyText = "这是用来测试的无意义的一句话啦啦啦。";
+  
+  String connectString = "jdbc:mysql://172.18.35.96:3306/myblogdb?autoReconnect=true&useUnicode=true&characterEncoding=UTF-8";
+  Class.forName("com.mysql.jdbc.Driver");
+  Connection connect = DriverManager.getConnection(connectString, "root", "zhuzhiru");
+  Statement stmt = connect.createStatement();
+
   //TODO: Acquire top articles from database
   //从数据库中取出置顶文章，放入以下形式的List中
   List<Map<String, String> > topArticle = new ArrayList<>();
-  for (int i = 0;i < 4;i ++) {
+  ResultSet result = stmt.executeQuery("select * from Blog");
+  while (result.next()) {
+    int sign = result.getInt("sign");
+    if (sign == 0) {
+      Map<String, String> map = new HashMap<>();
+      map.put("sign", "顶");
+      map.put("title", result.getString("title"));
+      map.put("commentCount", Integer.toString(result.getInt("commentCount")));
+      map.put("fabulousCount", Integer.toString(result.getInt("likeCount")));
+      topArticle.add(map);
+    }
+  }
+  /*for (int i = 0;i < 4;i ++) {
     Map<String, String> stringMap = new HashMap<>();
     stringMap.put("sign", "顶");
     stringMap.put("title", "测试" + i);
     stringMap.put("commentCount", Integer.toString(i));
     stringMap.put("fabulousCount", Integer.toString(i));
     topArticle.add(stringMap);
-  }
+  }*/
   pageContext.setAttribute("topArticle", topArticle);
+
   //TODO: Acquire tag clouds from database
   //从数据库中取出标签，放入以下形式的List中
-  List<String> tag = new ArrayList<>();
-  for (int i = 1;i < 10;i ++){
-    tag.add("#" + new String(new char[i]).replace("\0","字"));
+  List<String> tag = new ArrayList<>(); //所有标签载入
+  result = stmt.executeQuery("select * from Label");
+  while (result.next()) {
+    tag.add("#" + result.getString("labelID"));
   }
+  /*for (int i = 1;i < 10;i ++){
+    tag.add("#" + new String(new char[i]).replace("\0","字"));
+  }*/
   pageContext.setAttribute("tag", tag);
+
   //TODO: Acquire article list from database
   //从数据库中取出前k篇文章，放入以下形式的List中
   List<Map<String, String> > mainArticle = new ArrayList<>();
-  for (int i = 0;i < 4;i ++) {
+  result = stmt.executeQuery("select * from Blog");
+  while (result.next()) {
+    Map<String, String> map = new HashMap<>();
+    int sign = result.getInt("sign");
+    if (sign == 0)
+      map.put("sign", "原创");
+    map.put("title", result.getString("title"));
+    map.put("img", result.getString("img"));
+    map.put("article", result.getString("content"));
+    map.put("time", result.getString("time"));
+    map.put("readCount", result.getString("pageviews"));
+    map.put("commentCount", result.getString("commentCount"));
+    map.put("fabulousCount", result.getString("likeCount"));
+    mainArticle.add(map);
+  }
+  /*for (int i = 0;i < 4;i ++) {
     Map<String, String> stringMap = new HashMap<>();
     stringMap.put("sign", "原创");
     stringMap.put("title", "测试" + i);
     stringMap.put("img", "img/lengtu.jpg");
-    stringMap.put("article", "这是第" + i + "篇文章");
+    stringMap.put("article", "这是第" + i + "篇文章");//content
     stringMap.put("time", "2019-06-01 23:00");
     stringMap.put("readCount", Integer.toString(i));
     stringMap.put("commentCount", Integer.toString(i));
-    stringMap.put("fabulousCount", Integer.toString(i));
+    stringMap.put("fabulousCount", Integer.toString(i));//likeCount
     mainArticle.add(stringMap);
-  }
+  }*/
   pageContext.setAttribute("mainArticle", mainArticle);
+
   //TODO: Acquire comment from database
   //从数据库中取出前j条评论，放入以下形式的List中
   List<Map<String, String> > comment = new ArrayList<>();
-  for (int i = 0;i < 5;i ++){
+  result = stmt.executeQuery("select * from Message");
+  while (result.next()) {
+    Map<String, String> map = new HashMap<>();
+    map.put("name", result.getString("guestID"));
+    map.put("message", result.getString("content"));
+    comment.add(map);
+  }
+  /*for (int i = 0;i < 5;i ++){
     Map<String, String> stringMap = new HashMap<>();
     stringMap.put("name", "志儒" + i + "号");
     stringMap.put("message", "我永远喜欢李新锐");
     comment.add(stringMap);
-  }
+  }*/
   pageContext.setAttribute("comment", comment);
 %>
 <!DOCTYPE html>

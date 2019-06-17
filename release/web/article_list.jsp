@@ -6,7 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="java.util.*" %>
+<%@ page import="java.util.*,java.sql.*" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="mainpage" tagdir="/WEB-INF/tags" %>
 <%
@@ -17,6 +17,10 @@
     if (request.getParameter("page") != null){
         currentPage = Integer.parseInt(request.getParameter("page"));
     }
+    String connectString = "jdbc:mysql://172.18.35.96:3306/myblogdb?autoReconnect=true&useUnicode=true&characterEncoding=UTF-8";
+    Class.forName("com.mysql.jdbc.Driver");
+    Connection connect = DriverManager.getConnection(connectString, "root", "zhuzhiru");
+    Statement stmt = connect.createStatement();
 
     //TODO: Acquire blog from database
     //获取文章的篇数
@@ -32,7 +36,22 @@
     //生成
     //从数据库中取出前k篇文章，放入以下形式的List中
     List<Map<String, String> > mainArticle = new ArrayList<>();
-    for (int i = 0;i < 10;i ++) {
+    ResultSet result = stmt.executeQuery("select * from Blog");
+    while (result.next()) {
+        Map<String, String> map = new HashMap<>();
+        int sign = result.getInt("sign");
+        if (sign == 0)
+            map.put("sign", "原创");
+        map.put("title", result.getString("title"));
+        map.put("img", result.getString("img"));
+        map.put("article", result.getString("content"));
+        map.put("time", result.getString("time"));
+        map.put("readCount", result.getString("pageviews"));
+        map.put("commentCount", result.getString("commentCount"));
+        map.put("fabulousCount", result.getString("likeCount"));
+        mainArticle.add(map);
+    }
+    /*for (int i = 0;i < 10;i ++) {
         Map<String, String> stringMap = new HashMap<>();
         stringMap.put("sign", "原创");
         stringMap.put("title", "测试" + i);
@@ -41,13 +60,17 @@
         stringMap.put("commentCount", Integer.toString(i));
         stringMap.put("fabulousCount", Integer.toString(i));
         mainArticle.add(stringMap);
-    }
+    }*/
     pageContext.setAttribute("mainArticle", mainArticle);
     //TODO: Acquire tag clouds from database
     List<String> tag = new ArrayList<>();
-    for (int i = 1;i < 10;i ++){
-        tag.add("#" + new String(new char[i]).replace("\0","字"));
+    result = stmt.executeQuery("select * from Label");
+    while (result.next()) {
+        tag.add("#" + result.getString("labelID"));
     }
+    /*for (int i = 1;i < 10;i ++){
+        tag.add("#" + new String(new char[i]).replace("\0","字"));
+    }*/
     pageContext.setAttribute("tag", tag);
 %>
 <!DOCTYPE html>
