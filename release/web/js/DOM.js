@@ -11,8 +11,8 @@ export class MainPage{
         // 分享模块
         let imgs = document.querySelectorAll("#container .content>aside .shareclick img");
         for (let i = 0; i < imgs.length; i++) {
-            imgs[i].addEventListener("click", function() {
-                MainPage().goShare(this.alt);
+            imgs[i].addEventListener("click", () => {
+                this.goShare(imgs[i].alt);
             }, false);
         }
     }
@@ -42,7 +42,6 @@ export class MainPage{
         })
     }
 
-
     goShare(s){
         //qq空间接口
         if (s === 'qzone')
@@ -55,4 +54,5 @@ export class MainPage{
             window.open('http://connect.qq.com/widget/shareqq/index.html?url=' + document.location.href +
                 '?sharesource=qzone&title=' + this.title + '&summary=' + this.desc);
     }
+
 }
