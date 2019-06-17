@@ -15,11 +15,19 @@
 	font-weight: 600;
 	color:midnightblue;
 }
-.sign {
+#sign1 {
 	position: relative;
 	float: left;
 	border-radius: 20px;
 	background-color: darkslategray;
+	top:3px;
+	margin-right: 5px;
+}
+#sign2 {
+	position: relative;
+	float: left;
+	border-radius: 20px;
+	background-color: lightpink;
 	top:3px;
 	margin-right: 5px;
 }
@@ -75,7 +83,14 @@
 .button-list>.next-article>img{
 	margin-left:10px;
 }
-
+#reprint-article{
+	border: 0;
+	cursor: pointer;
+	width:80px;
+	color: white;
+	background-color: #6495ED;
+	border-radius: 8px;
+}
 /* 评论区 */
 .subcontent-aricle>.comment{
 	min-height: 100px;
