@@ -33,6 +33,16 @@ h1 {
 	padding-top: 5px;
 
 }
+.login{
+	display: inline-block;
+	position: relative;
+	top:-60px;
+	left:80%;
+	color: white;
+}
+.login>a{
+	color: skyblue;
+}
 /*导航栏样式*/
 .first-page {
 	background-color: rgb(73, 90, 130);
