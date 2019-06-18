@@ -7,7 +7,10 @@ export class MainPage{
         this.articleList = document.querySelector(".article-list");
         this.articleCount = parseInt(document.getElementById("blog-count").textContent);
         this.btnMore = document.getElementById("moreclick");
+        this.btnSearch = document.getElementById("search-btn");
+        this.inputSearch = document.getElementById("search");
 	    this.btnMore.addEventListener("click", this.loadMore.bind(this), false);
+	    this.btnSearch.addEventListener("click", this.search.bind(this), false);
         // 分享模块
         let imgs = document.querySelectorAll("#container .content>aside .shareclick img");
         for (let i = 0; i < imgs.length; i++) {
@@ -38,9 +41,17 @@ export class MainPage{
     }
 
     //搜索日志
-    search(topic){
+    search(){
+        let topic = this.inputSearch.value;
+        let mode = 2;
+        if (topic === '文章搜索...') {
+            mode = 1;
+            this.btnMore.style.visibility = "visible";
+        }
+        else
+            this.btnMore.style.visibility = "hidden";
         let params = {
-            "mode": 2,
+            "mode": mode,
             "topic": topic
         };
         getHTML(this, '/template/mainpage_article_list.jsp', params, (data) => {

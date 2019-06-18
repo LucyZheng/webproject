@@ -10,13 +10,34 @@
     Class.forName("com.mysql.jdbc.Driver");
     Connection connect = DriverManager.getConnection(connectString, "root", "zhuzhiru");
     Statement stmt = connect.createStatement();
-
-    int mode = Integer.parseInt(request.getParameter("mode"));
-    int from = Integer.parseInt(request.getParameter("from"));
-    int count = Integer.parseInt(request.getParameter("count"));
+    int mode = 0;
+    int from = 0;
+    int count = 4;
+    if (request.getParameter("mode") != null){
+        mode = Integer.parseInt(request.getParameter("mode"));
+    }
+    if (request.getParameter("from") != null) {
+        from = Integer.parseInt(request.getParameter("from"));
+    }
+    if (request.getParameter("from") != null) {
+        count = Integer.parseInt(request.getParameter("count"));
+    }
+    String topic = request.getParameter("topic");
     //TODO: Acquire article list from database
     List<Map<String, String>> mainArticle = new ArrayList<>();
-    ResultSet result = stmt.executeQuery("select * from Blog limit " + from + "," + count);
+    ResultSet result;
+    if (mode == 0){
+        result = stmt.executeQuery("select * from Blog");
+    }
+    else if (mode == 1){
+        result = stmt.executeQuery("select * from Blog limit " + from + "," + count);
+    }
+    else if (mode == 2 && topic.length() != 0){
+        result = stmt.executeQuery("select * from Blog where title like \"%" + topic + "%\"");
+    }
+    else{
+        result = stmt.executeQuery("select * from Blog");
+    }
     while (result.next()) {
         Map<String, String> map = new HashMap<>();
         int sign = result.getInt("sign");

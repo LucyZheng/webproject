@@ -12,7 +12,7 @@
   Connection connect = DriverManager.getConnection(connectString, "root", "zhuzhiru");
   Statement stmt = connect.createStatement();
 
-  //TODO: Acquire top articles from database
+  //TODO: 判断一篇文章是否是置顶
   //从数据库中取出置顶文章，放入以下形式的List中
   List<Map<String, String> > topArticle = new ArrayList<>();
   ResultSet result = stmt.executeQuery("select * from Blog");
@@ -138,7 +138,8 @@
       <li><a href="#">相册</a></li>
       <li><a href="#">留言板</a></li>
       <li><a href="#">我的访客</a></li>
-      <button type="button"></button>
+      <input type="text" id="search" value="文章搜索..." onfocus="if (value =='文章搜索...'){value =''}" onblur="if (value ==''){value='文章搜索...'}" >
+      <button type="button" id="search-btn"></button>
     </ul>
 
   </nav>
