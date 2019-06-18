@@ -20,7 +20,7 @@
 				<label for="password" class="password-label"> 请输入密码： </label>
 				<input id="password" name="password" required="required" type="password" />
 			</p>
-			<button type="submit" class="submitbutton">登 录</button>
+			<button type="submit" id="submitbutton" onclick="ifEmpty()">登 录</button>
 			<p class="change_link">
 				还没有账号？
 				<a href="sign_up.html" class="to-register">去注册</a>
@@ -28,4 +28,14 @@
 		</div>
 	</body>
 	<footer>&copy;2019-2030 啦啦啦</footer>
+	<script type="text/javascript">
+		function ifEmpty() {
+			var username = document.getElementById("username").value;
+			var password = document.getElementById("password").value;
+			var registerButton = document.getElementById("submitbutton");
+			if(username=="" || rePassword=="" || password==""){
+				alert("不能为空！");
+			}
+		}
+	</script>
 </html>

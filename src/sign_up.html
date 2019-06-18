@@ -6,6 +6,7 @@
 		<link rel="stylesheet" type="text/css" href="css/common.css">
 		<link rel="stylesheet" type="text/css" href="css/sign_up.css">
 		<meta name="Description" content="666的博客,心随你动!" />
+
 	</head>
 	<body>
 		<div class="signup_box">
@@ -14,7 +15,7 @@
 			</p>
 			<p class="input-area">
 				<label for="username" class="username-label"> 请输入用户名： </label>
-				<input id="username" name="username" required="required" type="text" placeholder="例:  王小明" />
+				<input id="username" name="username" required="required" type="text" placeholder="例:  小明" />
 			</p>
 			<p class="input-area">
 				<label for="password" class="password-label"> 请输入密码： </label>
@@ -24,7 +25,7 @@
 				<label for="re-password" class="re-password-label"> 请重复输入密码： </label>
 				<input id="re-password" name="password" required="required" type="password" />
 			</p>
-			<button type="submit" class="submitbutton">注 册</button>
+			<button type="submit" id="submitbutton" onclick="ifsame()">注 册</button>
 			<p class="change_link">
 				已有账号？
 				<a href="sign_in.html" class="to-register">去登录</a>
@@ -32,4 +33,20 @@
 		</div>
 	</body>
 	<footer>&copy;2019-2030 啦啦啦</footer>
+	<script type="text/javascript">
+		function ifsame() {
+			var username = document.getElementById("username").value;
+			var rePassword = document.getElementById("re-password").value;
+			var password = document.getElementById("password").value;
+			var registerButton = document.getElementById("submitbutton");
+			if (rePassword != password && rePassword!="" && password!="") {
+				alert("两次密码输入不相同，请重新输入！");	
+				document.getElementById("re-password").value="";
+				document.getElementById("password").value="";
+			}
+			if(username=="" || rePassword=="" || password==""){
+				alert("不能为空！");
+			}
+		}
+	</script>
 </html>
