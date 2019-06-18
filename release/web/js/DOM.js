@@ -33,7 +33,7 @@ export class MainPage{
 		        this.btnMore.disabled = true;
             }
 		    else {
-                this.articleList.insertAdjacentHTML("afterend", data);
+                this.articleList.insertAdjacentHTML("beforeend", data);
                 this.articleCount += 4;
             }
         });
