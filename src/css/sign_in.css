@@ -34,7 +34,7 @@ body{
 	height:25px;
 	font-size: 1em;
 }
-.submitbutton{
+#submitbutton{
 	display: block;
 	margin:auto;
 	cursor: pointer;
@@ -49,7 +49,7 @@ body{
 	color: white;
 	background-color:cadetblue;
 }
-.submitbutton:hover{
+#submitbutton:hover{
 	background-color: lightblue;
 }
 .change_link{
@@ -72,5 +72,5 @@ footer {
 	text-align: center;
 	line-height: 30px;
 	position: relative;
-	top:140px;
+	top:210px;
 }
