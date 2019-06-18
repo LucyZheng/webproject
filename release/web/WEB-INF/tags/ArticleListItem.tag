@@ -1,5 +1,6 @@
 
 <%@ tag pageEncoding="UTF-8" %>
+<%@ attribute name="blogID" required="true" %>
 <%@ attribute name="sign" required="true" %>
 <%@ attribute name="title" required="true" %>
 <%@ attribute name="img" required="true" %>
@@ -15,7 +16,7 @@
       <span class="sign-span"><%=sign%></span>
       <div></div>
     </div>
-    <h3><a href="#"><%=title%></a></h3>
+    <h3><a href="article.jsp?id=<%=blogID%>"><%=title%></a></h3>
   </header>
   <section>
     <img src="<%=img%>" id="tinyimage">

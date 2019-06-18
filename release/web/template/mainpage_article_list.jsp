@@ -43,6 +43,7 @@
         int sign = result.getInt("sign");
         if (sign == 0)
             map.put("sign", "置顶");
+        map.put("blogID", result.getString("blogID"));
         map.put("title", result.getString("title"));
         map.put("img", result.getString("img"));
         map.put("article", result.getString("content"));
@@ -68,6 +69,7 @@
 %>
 <c:forEach items="${mainArticle}" var="i">
     <mainpage:ArticleListItem
+            blogID="${i.get(\"blogID\")}"
             sign="${i.get(\"sign\")}"
             title="${i.get(\"title\")}"
             img="${i.get(\"img\")}"

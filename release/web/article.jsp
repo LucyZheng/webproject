@@ -11,6 +11,35 @@
     String headTitle = "游呢娃子的博客";
     String headSignature = "这个人很懒，什么都没有说。";
     String flybyText = "这是用来测试的无意义的一句话啦啦啦。";
+    String id = request.getParameter("id");
+    String sign = "";
+    String title = "";
+    String content = "";
+    String time = "";
+    String readCount = "";
+    String commentCount = "";
+    String fabulousCount = "";
+    String connectString = "jdbc:mysql://172.18.35.96:3306/myblogdb?autoReconnect=true&useUnicode=true&characterEncoding=UTF-8";
+    Class.forName("com.mysql.jdbc.Driver");
+    Connection connect = DriverManager.getConnection(connectString, "root", "zhuzhiru");
+    Statement stmt = connect.createStatement();
+    ResultSet result = stmt.executeQuery("select * from Blog where blogID = " + id);
+
+    while (result.next()){
+        int sqlSign = result.getInt("sign");
+        if (sqlSign == 0 || sqlSign == 2){
+            sign = "原创";
+        }
+        else{
+            sign = "转载";
+        }
+        title = result.getString("title");
+        content = result.getString("content");
+        time = result.getString("time");
+        readCount = result.getString("pageviews");
+        commentCount = result.getString("commentCount");
+        fabulousCount = result.getString("likeCount");
+    }
 %>
 <!DOCTYPE html>
 <html>
@@ -30,8 +59,8 @@
 <div id="wrapper">
     <header>
         <div id="header-text">
-            <h1>游呢娃子的博客</h1>
-            <div id="signature">这个人很懒，什么都没有说。</div>
+            <h1><%=headTitle%></h1>
+            <div id="signature"><%=headSignature%></div>
         </div>
     </header>
     <nav>
@@ -50,7 +79,7 @@
         <div class="flytext">
             <img src="img/widespread.png" />
             <marquee behavior="scroll" direction="left">
-                这是用来测试的无意义的一句话啦啦啦。
+                <%=flybyText%>
             </marquee>
         </div>
         <div class="subcontent-aricle">
@@ -59,9 +88,9 @@
             </div>
             <div class="article-title">
                 <div class="sign">
-                    <span id="sign1">原创</span>
+                    <span id="sign1"><%=sign%></span>
                 </div>
-                <h3>小朋友要有小朋友的亚子</h3>
+                <h3><%=title%></h3>
             </div>
             <div class="button-list">
                 <div class="like">
@@ -78,8 +107,7 @@
                 </div>
             </div>
             <div class="article-content">
-                好好读术！接下来别看了都是测试。接下来别看了都是测试。接下来别看了都是测试。接下来别看了都是测试。
-                接下来别看了都是测试。接下来别看了都是测试。接下来别看了都是测试。
+                <%=content%>
             </div>
             <div class="comment">
                 <div class="comment-title">

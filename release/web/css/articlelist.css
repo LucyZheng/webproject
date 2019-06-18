@@ -35,6 +35,35 @@ section>.title>span {
 	cursor: pointer;
 }
 
+.sign{
+	position: relative;
+	top:-2px;
+	margin-right: 1px;
+}
+
+.sign-original{
+	position: relative;
+	float: left;
+	border-radius: 20px;
+	background-color: darkslategray;
+	top:3px;
+	margin-right: 5px;
+}
+
+.sign-reprint{
+	position: relative;
+	float: left;
+	border-radius: 20px;
+	background-color: lightpink;
+	top:3px;
+	margin-right: 5px;
+}
+.sign>span {
+	color: white;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
 /* 日志列表 */
 .article-list {
 	margin-left: 10px;

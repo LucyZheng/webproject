@@ -24,7 +24,11 @@
 
     //TODO: Acquire blog from database
     //获取文章的篇数
-    int blogCount = 50;
+    int blogCount = 0;
+    ResultSet resultCount = stmt.executeQuery("select count(*) from Blog");
+    while (resultCount.next()){
+        blogCount = resultCount.getInt(1);
+    }
     //每页显示10篇
     int pageCount = (int)Math.ceil(blogCount / 10.0);
     if (currentPage <= 0)
@@ -36,7 +40,7 @@
     //生成
     //从数据库中取出前k篇文章，放入以下形式的List中
     List<Map<String, String> > mainArticle = new ArrayList<>();
-    ResultSet result = stmt.executeQuery("select * from Blog");
+    ResultSet result = stmt.executeQuery("select * from Blog limit " + (currentPage - 1) * 10 + ", 10");
     while (result.next()) {
         Map<String, String> map = new HashMap<>();
         int sign = result.getInt("sign");
@@ -137,7 +141,7 @@
                     <ul class="pagination">
                         <li><a href="article_list.jsp?page=${currentPage - 1}">«</a></li>
                             <c:forEach var="i" begin="1" end="${pageCount}">
-                                <li><a href="article_list.jsp?page=${i}">${i}</a></li>
+                                <li><a href="article_list.jsp?page=${i}" class="<c:if test="${i == currentPage}">active</c:if>">${i}</a></li>
                             </c:forEach>
                         <li><a href="article_list.jsp?page=${currentPage + 1}">»</a></li>
                     </ul>

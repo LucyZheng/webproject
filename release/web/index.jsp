@@ -12,14 +12,14 @@
   Connection connect = DriverManager.getConnection(connectString, "root", "zhuzhiru");
   Statement stmt = connect.createStatement();
 
-  //TODO: 判断一篇文章是否是置顶
   //从数据库中取出置顶文章，放入以下形式的List中
   List<Map<String, String> > topArticle = new ArrayList<>();
-  ResultSet result = stmt.executeQuery("select * from Blog");
+  ResultSet result = stmt.executeQuery("select * from Blog where (sign = 0 or sign = 1)");
   while (result.next()) {
     int sign = result.getInt("sign");
     if (sign == 0) {
       Map<String, String> map = new HashMap<>();
+      map.put("blogID", result.getString("blogID"));
       map.put("sign", "顶");
       map.put("title", result.getString("title"));
       map.put("commentCount", Integer.toString(result.getInt("commentCount")));
@@ -58,6 +58,7 @@
     int sign = result.getInt("sign");
     if (sign == 0)
       map.put("sign", "原创");
+    map.put("blogID", result.getString("blogID"));
     map.put("title", result.getString("title"));
     map.put("img", result.getString("img"));
     map.put("article", result.getString("content"));
@@ -162,6 +163,7 @@
           <div class="cont">
             <c:forEach items="${topArticle}" var="i">
               <mainpage:TopArticle
+                      blogID="${i.get(\"blogID\")}"
                       sign="${i.get(\"sign\")}"
                       title="${i.get(\"title\")}"
                       commentCount="${i.get(\"commentCount\")}"
@@ -173,6 +175,7 @@
         <div class="article-list">
           <c:forEach items="${mainArticle}" var="i">
             <mainpage:ArticleListItem
+              blogID="${i.get(\"blogID\")}"
               sign="${i.get(\"sign\")}"
               title="${i.get(\"title\")}"
               img="${i.get(\"img\")}"
