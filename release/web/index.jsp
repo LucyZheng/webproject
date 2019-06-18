@@ -6,7 +6,7 @@
   String headTitle = "游呢娃子的博客";
   String headSignature = "这个人很懒，什么都没有说。";
   String flybyText = "这是用来测试的无意义的一句话啦啦啦。";
-  
+  int blogCount = 0;
   String connectString = "jdbc:mysql://172.18.35.96:3306/myblogdb?autoReconnect=true&useUnicode=true&characterEncoding=UTF-8";
   Class.forName("com.mysql.jdbc.Driver");
   Connection connect = DriverManager.getConnection(connectString, "root", "zhuzhiru");
@@ -50,9 +50,9 @@
   pageContext.setAttribute("tag", tag);
 
   //TODO: Acquire article list from database
-  //从数据库中取出前k篇文章，放入以下形式的List中
+  //从数据库中取出前j篇文章，放入以下形式的List中
   List<Map<String, String> > mainArticle = new ArrayList<>();
-  result = stmt.executeQuery("select * from Blog");
+  result = stmt.executeQuery("select * from Blog limit 4");
   while (result.next()) {
     Map<String, String> map = new HashMap<>();
     int sign = result.getInt("sign");
@@ -66,6 +66,7 @@
     map.put("commentCount", result.getString("commentCount"));
     map.put("fabulousCount", result.getString("likeCount"));
     mainArticle.add(map);
+    ++ blogCount;
   }
   /*for (int i = 0;i < 4;i ++) {
     Map<String, String> stringMap = new HashMap<>();
@@ -84,7 +85,7 @@
   //TODO: Acquire comment from database
   //从数据库中取出前j条评论，放入以下形式的List中
   List<Map<String, String> > comment = new ArrayList<>();
-  result = stmt.executeQuery("select * from Message");
+  result = stmt.executeQuery("select * from Message limit 4");
   while (result.next()) {
     Map<String, String> map = new HashMap<>();
     map.put("name", result.getString("guestID"));
@@ -120,6 +121,7 @@
   </script>
 </head>
 <body>
+<div id="blog-count" class="messenger"><%=blogCount%></div>
 <div id="wrapper">
   <!-- 头部 -->
   <header>

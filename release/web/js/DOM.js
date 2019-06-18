@@ -5,7 +5,7 @@ export class MainPage{
         this.title = document.querySelector("title").innerText;
         this.desc = document.querySelector("meta[name=description]").content;
         this.articleList = document.querySelector(".article-list");
-        this.articleCount = 4;
+        this.articleCount = parseInt(document.getElementById("blog-count").textContent);
         this.btnMore = document.getElementById("moreclick");
 	    this.btnMore.addEventListener("click", this.loadMore.bind(this), false);
         // 分享模块
@@ -25,8 +25,14 @@ export class MainPage{
             "count": 4
         };
 		getHTML(this,'/template/mainpage_article_list.jsp', params, (data) => {
-            this.articleList.insertAdjacentHTML("afterend", data);
-            this.articleCount += 4;
+		    if (null == data || "" == data.trim()){
+		        this.btnMore.innerText = "没有更多的博客了";
+		        this.btnMore.disabled = true;
+            }
+		    else {
+                this.articleList.insertAdjacentHTML("afterend", data);
+                this.articleCount += 4;
+            }
         });
 
     }

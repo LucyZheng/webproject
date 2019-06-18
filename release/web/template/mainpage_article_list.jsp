@@ -12,9 +12,11 @@
     Statement stmt = connect.createStatement();
 
     int mode = Integer.parseInt(request.getParameter("mode"));
+    int from = Integer.parseInt(request.getParameter("from"));
+    int count = Integer.parseInt(request.getParameter("count"));
     //TODO: Acquire article list from database
     List<Map<String, String>> mainArticle = new ArrayList<>();
-    ResultSet result = stmt.executeQuery("select * from Blog");
+    ResultSet result = stmt.executeQuery("select * from Blog limit " + from + "," + count);
     while (result.next()) {
         Map<String, String> map = new HashMap<>();
         int sign = result.getInt("sign");

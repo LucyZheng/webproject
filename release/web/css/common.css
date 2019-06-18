@@ -6,3 +6,7 @@ body{
 	padding:0;
 	color:hsl(240,0%,30%);
 }
+
+.messenger{
+	display: none;
+}
