@@ -175,3 +175,132 @@
 .pagination li a:hover:not(.active) {
 	background-color: #ddd;
 }
+
+/* 隐藏层 */
+#popBox{
+    position: absolute;
+    display:none;
+    width:1000px;
+    height:650px;
+    left:18%;
+    top:5%;
+    z-index:11;
+    background:aliceblue; 
+}
+#popBox-comment{
+	position: fixed;
+	display:none;
+	width:500px;
+	height:300px;
+	left:35%;
+	top:20%;
+	z-index:11;
+	background:aliceblue; 
+}
+#popBox-comment>.title{
+	margin:15px;	
+}
+#popBox-comment>.title>span{
+	font-weight: 600;
+}
+.photoinf{
+	position: relative;
+	left:10px;
+	top:70px;
+	display:flex;
+}
+.personal-icon{
+	width:100px;
+	height:100px;
+	margin-right: 10px;
+}
+.photo-comment-list{
+	width:400px;
+	margin-left:50px;
+	padding:10px;
+}
+.photo-comment-list>.title{
+	margin-bottom:10px;
+	font-weight: 600;
+}
+.single-comment{
+	margin-top:10px;
+	padding-bottom:10px;
+	display: flex;
+	border-bottom: 1px dashed lightblue;
+}
+.personal-name>a{
+	font-size: small;
+	text-decoration: none;
+	color:midnightblue;
+}
+.personal-name>a:hover{
+	color:purple;
+}
+.floor{
+	font-size: small;
+}
+.floor{
+	margin-bottom:5px;
+}
+.floor>span{
+	font-size: small;
+}
+
+.comment-opration{
+	display: flex;
+	margin-left: auto;
+	position: relative;
+	top:-3px;
+}
+.delete{
+	margin-left:10px;
+}
+.delete>span,.reply>span{
+	font-size: small;
+	color:steelblue;
+	cursor: pointer;
+}
+.delete>span:hover,.reply>span:hover{
+	color:lightskyblue;
+}
+.more{
+	text-align: center;
+	margin-top: 5px;
+}
+#moreclick{
+	background: transparent;
+	border:0;
+	cursor:pointer;
+}
+
+#popLayer{
+    position: absolute;
+    display:none;
+    left:0;
+    top:0;
+    z-index:10;
+    background:black;
+    -moz-opacity: 0.8;
+    opacity:.80;
+    filter: alpha(opacity=80);
+}
+.close{
+	position: absolute;
+	left: 96%;
+	top:2px;
+}
+.close2{
+	position: absolute;
+	left: 93%;
+	top:2px;
+}
+.photo-comment-button{
+	width:80px;
+	height:30px;
+	font-size: 1em;
+	cursor: pointer;
+	border:0;
+	color: white;
+	background-color: skyblue;
+}

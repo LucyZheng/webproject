@@ -9,6 +9,45 @@
 		<link rel="stylesheet" type="text/css" href="css/mainpage_header.css">
 		<link rel="stylesheet" type="text/css" href="css/album.css">
 		<meta name="Description" content="666的博客,心随你动!" />
+		<script type="text/javascript">
+			function popBox() {
+				var popBox = document.getElementById('popBox');
+				var popLayer = document.getElementById('popLayer');
+
+				popLayer.style.width = document.body.scrollWidth + "px";
+				popLayer.style.height = document.body.scrollHeight + "px";
+
+				popLayer.style.display = "block";
+				popBox.style.display = "block";
+			}
+			function popBox2() {
+				var popBox = document.getElementById('popBox-comment');
+				var popLayer = document.getElementById('popLayer');
+			
+				popLayer.style.width = document.body.scrollWidth + "px";
+				popLayer.style.height = document.body.scrollHeight + "px";
+			
+				popLayer.style.display = "block";
+				popBox.style.display = "block";
+			}
+
+			function closeBox() {
+				var popBox = document.getElementById('popBox');
+				var popLayer = document.getElementById('popLayer');
+
+				popLayer.style.display = "none";
+				popBox.style.display = "none";
+
+			}
+			function closeBox2() {
+				var popBox = document.getElementById('popBox-comment');
+				var popLayer = document.getElementById('popLayer');
+			
+				popLayer.style.display = "none";
+				popBox.style.display = "none";
+			
+			}
+		</script>
 
 
 	</head>
@@ -30,7 +69,7 @@
 					<li><a href="#">相册</a></li>
 					<li><a href="#">留言板</a></li>
 					<li><a href="#">我的访客</a></li>
-					<input type="text" id="search" value="文章搜索..." onfocus="if (value =='文章搜索...'){value =''}" onblur="if (value ==''){value='文章搜索...'}" >
+					<input type="text" id="search" value="文章搜索..." onfocus="if (value =='文章搜索...'){value =''}" onblur="if (value ==''){value='文章搜索...'}">
 					<button type="button"></button>
 				</ul>
 
@@ -69,11 +108,11 @@
 						<ul class="photo-list">
 							<li class="single-photo-inf" id="single-photo-inf-0" onmouseover="over(this.id)" onmouseout="out(this.id)">
 								<a href="#">
-									<img class="single-photo" src="img/lengtu.jpg" width="150" height="150">
+									<img class="single-photo" src="img/lengtu.jpg" width="150" height="150" onclick="popBox()">
 								</a>
 								<div class="photo-operation" id="photo-operation-0">
 									<img class="like-icon" src="img/good_32px.png">
-									<img class="comment-icon" src="img/comment_32px.png">
+									<img class="comment-icon" src="img/comment_32px.png" onclick="popBox2()">
 									<span class="photo-reblog">转载</span>
 								</div>
 								<div class="photo-description">冷兔宝宝超可爱</div>
@@ -100,6 +139,57 @@
 			</div>
 			<footer>&copy;2019-2030 啦啦啦</footer>
 		</div>
+		<div id="popLayer">
+		</div>
+		<div id="popBox-comment">
+			<div class="close2"><a href="javascript:void(0)" onclick="closeBox2()"><img src="img/close-popbox.png"></a></div>
+			<div class="title"><span>添加评论</span></div>
+			<div class="write-comment">
+				评论框todo
+			</div>
+			<button type="submit" class="photo-comment-button">评论</button>
+		</div>
+		<div id="popBox">
+			<div class="close"><a href="javascript:void(0)" onclick="closeBox()"><img src="img/close-popbox.png"></a></div>
+			<div class="photoinf">
+				<img src="img/lengtu.jpg">
+				<div class="photo-comment-list">
+					<div class="title">
+						评论列表
+					</div>
+					<div class="single-comment" id="single-comment-0">
+						<div class="personal-commentinf">
+							<img class="personal-icon" src="img/lengtu3.jpg">
+							<div class="personal-name">
+								<a href="#">鲲鲲</a>
+							</div>
+						</div>
+						<div class="personal-comment">
+							<div class="floor">
+								<span id="floor-count"><span>1</span>楼</span>
+								<span id="comment-time">评论时间：<span>2019-6-15 15:43:24</span></span>
+							</div>
+							<div class="comment-time-content">
+								鸡你太美！
+							</div>
+						</div>
+						<div class="comment-opration">
+							<div class="reply">
+								<span>回复</span>
+							</div>
+							<div class="delete">
+								<span>删除</span>
+							</div>
+						</div>
+					</div>
+					<div class="more">
+						<button type="button" id="moreclick">点击加载更多...</button>
+					</div>
+				</div>
+				
+			</div>
+			
+		</div>
 	</body>
 	<script type="text/javascript">
 		var sourceNode = document.getElementById("single-photo-inf-0");
@@ -109,6 +199,7 @@
 			clonedNode.childNodes[3].id = "photo-operation-" + i;
 			sourceNode.parentNode.appendChild(clonedNode);
 		}
+		
 
 		function over(id) {
 			var index = id.substr(id.length - 1, 1);
