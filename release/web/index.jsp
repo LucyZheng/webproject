@@ -3,7 +3,16 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="mainpage" tagdir="/WEB-INF/tags" %>
 <%
-  String headTitle = "游呢娃子的博客";
+  String userID = (String) session.getAttribute("userID");
+  String bloggerID = request.getParameter("blogger");
+  if (bloggerID == null) {
+    if (userID == null)
+      response.sendRedirect("sign_in.jsp");
+    else
+      bloggerID = userID;
+  }
+  pageContext.setAttribute("userID", userID);
+  String headTitle = bloggerID + "的博客";
   String headSignature = "这个人很懒，什么都没有说。";
   String flybyText = "这是用来测试的无意义的一句话啦啦啦。";
   int blogCount = 0;
@@ -11,10 +20,15 @@
   Class.forName("com.mysql.jdbc.Driver");
   Connection connect = DriverManager.getConnection(connectString, "root", "zhuzhiru");
   Statement stmt = connect.createStatement();
+  //取出个性签名
+  ResultSet resultSet = stmt.executeQuery("select signature from User where userID = \"" + bloggerID + "\"");
+  while (resultSet.next())
+    headSignature = resultSet.getString("signature");
+  flybyText = headSignature;
 
   //从数据库中取出置顶文章，放入以下形式的List中
   List<Map<String, String> > topArticle = new ArrayList<>();
-  ResultSet result = stmt.executeQuery("select * from Blog where (sign = 0 or sign = 1)");
+  ResultSet result = stmt.executeQuery("select * from Blog where (sign = 0 or sign = 1) and userID = \"" + bloggerID + "\"");
   while (result.next()) {
     int sign = result.getInt("sign");
     if (sign == 0) {
@@ -52,7 +66,7 @@
   //TODO: Acquire article list from database
   //从数据库中取出前j篇文章，放入以下形式的List中
   List<Map<String, String> > mainArticle = new ArrayList<>();
-  result = stmt.executeQuery("select * from Blog limit 4");
+  result = stmt.executeQuery("select * from Blog where userID = \"" + bloggerID +"\" limit 4");
   while (result.next()) {
     Map<String, String> map = new HashMap<>();
     int sign = result.getInt("sign");
@@ -69,24 +83,12 @@
     mainArticle.add(map);
     ++ blogCount;
   }
-  /*for (int i = 0;i < 4;i ++) {
-    Map<String, String> stringMap = new HashMap<>();
-    stringMap.put("sign", "原创");
-    stringMap.put("title", "测试" + i);
-    stringMap.put("img", "img/lengtu.jpg");
-    stringMap.put("article", "这是第" + i + "篇文章");//content
-    stringMap.put("time", "2019-06-01 23:00");
-    stringMap.put("readCount", Integer.toString(i));
-    stringMap.put("commentCount", Integer.toString(i));
-    stringMap.put("fabulousCount", Integer.toString(i));//likeCount
-    mainArticle.add(stringMap);
-  }*/
   pageContext.setAttribute("mainArticle", mainArticle);
 
   //TODO: Acquire comment from database
   //从数据库中取出前j条评论，放入以下形式的List中
   List<Map<String, String> > comment = new ArrayList<>();
-  result = stmt.executeQuery("select * from Message limit 4");
+  result = stmt.executeQuery("select * from Message where hostID = \""+ bloggerID +"\" limit 4");
   while (result.next()) {
     Map<String, String> map = new HashMap<>();
     map.put("name", result.getString("guestID"));
@@ -123,6 +125,7 @@
 </head>
 <body>
 <div id="blog-count" class="messenger"><%=blogCount%></div>
+<div id="bloggerID" class="messenger"><%=bloggerID%></div>
 <div id="wrapper">
   <!-- 头部 -->
   <header>
@@ -130,13 +133,17 @@
       <h1><%=headTitle%></h1>
       <div id="signature"><%=headSignature%></div>
     </div>
+    <div class="login">
+      <c:if test="${userID == null}">您好，请 <a href="sign_in.jsp">登录</a></c:if>
+      <c:if test="${userID != null}">欢迎，<a href="setting.jsp"><%=userID%></a></c:if>
+    </div>
   </header>
   <!-- 导航条 -->
   <nav>
     <ul>
-      <li class="first-page"><a href="/">主页</a></li>
-      <li><a href="/blog">日志</a></li>
-      <li><a href="#">相册</a></li>
+      <li class="first-page"><a href="/?blogger=<%=bloggerID%>">主页</a></li>
+      <li><a href="/blog?blogger=<%=bloggerID%>">日志</a></li>
+      <li><a href="/album_list.jsp?blogger=<%=bloggerID%>">相册</a></li>
       <li><a href="#">留言板</a></li>
       <li><a href="#">我的访客</a></li>
       <input type="text" id="search" value="文章搜索..." onfocus="if (value =='文章搜索...'){value =''}" onblur="if (value ==''){value='文章搜索...'}" >

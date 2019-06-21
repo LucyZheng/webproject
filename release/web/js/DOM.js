@@ -1,7 +1,9 @@
 import {getHTML} from "./htmlResolver.js";
+import {getJSON, postFile} from "./jsonResolver.js";
 //MainPage
 export class MainPage{
     constructor(){
+        this.bloggerID = document.getElementById("bloggerID").innerText;
         this.title = document.querySelector("title").innerText;
         this.desc = document.querySelector("meta[name=description]").content;
         this.articleList = document.querySelector(".article-list");
@@ -23,6 +25,7 @@ export class MainPage{
     //获取更多日志
     loadMore(){
         let params = {
+            "bloggerID": this.bloggerID,
             "mode": 1,
             "from": this.articleCount,
             "count": 4
@@ -72,4 +75,133 @@ export class MainPage{
                 '?sharesource=qzone&title=' + this.title + '&summary=' + this.desc);
     }
 
+}
+
+export class SignUp{
+    constructor(){
+        this.btnSubmit = document.getElementById("submitbutton");
+        this.btnSubmit.addEventListener('click', this.ifsame);
+    }
+    ifsame() {
+        let username = document.getElementById("username").value;
+        let rePassword = document.getElementById("re-password").value;
+        let password = document.getElementById("password").value;
+        if (rePassword != password && rePassword!="" && password!="") {
+            alert("两次密码输入不相同，请重新输入！");
+            document.getElementById("re-password").value="";
+            document.getElementById("password").value="";
+        }
+        else if(username=="" || rePassword=="" || password==""){
+            alert("不能为空！");
+        }
+        else{
+            let params = {
+                "username": username,
+                "password": password
+            };
+            getJSON(this, 'template/mainpage_signup.jsp', params, (data) => {
+                let jsonObj = JSON.parse(data);
+                if (jsonObj['status'] === "exist"){
+                    alert("用户已存在");
+                }
+                else if (jsonObj['status'] === "success") {
+                    alert("注册成功！");
+                    window.location.href="sign_in.jsp";
+                }
+                else{
+                    alert("未知错误");
+                }
+            })
+        }
+    }
+}
+
+export class SignIn{
+    constructor(){
+        this.registerButton = document.getElementById("submitbutton");
+        this.registerButton.addEventListener("click", this.ifEmpty);
+    }
+    ifEmpty() {
+        let username = document.getElementById("username").value;
+        let password = document.getElementById("password").value;
+        if(username=="" || password==""){
+            alert("不能为空！");
+        }
+        else{
+            let params = {
+                "username": username,
+                "password": password
+            };
+            getJSON(this, 'template/mainpage_signin.jsp', params, (data) => {
+                let jsonObj = JSON.parse(data);
+                if (jsonObj['status'] === "error"){
+                    alert("用户名或密码错误");
+                }
+                else if (jsonObj['status'] === 'success') {
+                    window.location.href = document.referrer;
+                }
+                else{
+                    alert('未知错误');
+                }
+            })
+        }
+    }
+}
+
+export class Setting{
+    constructor(){
+        this.inputPassword = document.getElementById("password");
+        this.inputRPassword = document.getElementById("re-password");
+        this.inputSignature = document.getElementById("set-signature");
+        this.imgUpload = document.getElementById("upload-icon-preview");
+        this.inputUpload = document.getElementById("upload-icon-input");
+        this.inputUpload.addEventListener("change", this.refreshPreview.bind(this));
+        this.btnSubmit = document.querySelector('.correct-inf');
+        this.btnSubmit.addEventListener("click", this.updateInfo.bind(this));
+    }
+    refreshPreview(){
+        let newsrc = getObjectURL(this.inputUpload.files[0]);
+        this.imgUpload.src = newsrc;
+    }
+    updateInfo(){
+        let rePassword = document.getElementById("re-password").value;
+        let password = document.getElementById("password").value;
+        let signature = document.getElementById("set-signature").value;
+        let userIcon = document.getElementById("upload-icon-input").files[0];
+        let formObj = document.querySelector("form");
+        if (rePassword !== password) {
+            alert("两次密码输入不相同，请重新输入！");
+            document.getElementById("re-password").value="";
+            document.getElementById("password").value="";
+        }
+        let params = {
+            "password": password,
+            "signature": signature,
+            "userIcon": userIcon
+        };
+        postFile(this, 'template/setting_upgrade.jsp', params, (data) => {
+            let jsonObj = JSON.parse(data);
+            if (jsonObj['status'] === "success") {
+                alert("更新成功！");
+            }
+            else if(jsonObj['status'] === "error"){
+                alert("更新错误！");
+            }
+            else{
+                alert("未知错误");
+            }
+        })
+    }
+}
+
+function getObjectURL(file) {
+    let url = null ;
+    if (window.createObjectURL!=undefined) { // basic
+        url = window.createObjectURL(file) ;
+    } else if (window.URL!=undefined) { // mozilla(firefox)
+        url = window.URL.createObjectURL(file) ;
+    } else if (window.webkitURL!=undefined) { // webkit or chrome
+        url = window.webkitURL.createObjectURL(file) ;
+    }
+    return url ;
 }

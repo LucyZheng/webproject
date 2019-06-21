@@ -10,6 +10,7 @@
     Class.forName("com.mysql.jdbc.Driver");
     Connection connect = DriverManager.getConnection(connectString, "root", "zhuzhiru");
     Statement stmt = connect.createStatement();
+    String bloggerID = request.getParameter("bloggerID");
     int mode = 0;
     int from = 0;
     int count = 4;
@@ -19,7 +20,7 @@
     if (request.getParameter("from") != null) {
         from = Integer.parseInt(request.getParameter("from"));
     }
-    if (request.getParameter("from") != null) {
+    if (request.getParameter("count") != null) {
         count = Integer.parseInt(request.getParameter("count"));
     }
     String topic = request.getParameter("topic");
@@ -27,16 +28,16 @@
     List<Map<String, String>> mainArticle = new ArrayList<>();
     ResultSet result;
     if (mode == 0){
-        result = stmt.executeQuery("select * from Blog");
+        result = stmt.executeQuery("select * from Blog where userID = \"" + bloggerID + "\"");
     }
     else if (mode == 1){
-        result = stmt.executeQuery("select * from Blog limit " + from + "," + count);
+        result = stmt.executeQuery("select * from Blog where userID = \""+ bloggerID+ "\" limit " + from + "," + count);
     }
     else if (mode == 2 && topic.length() != 0){
-        result = stmt.executeQuery("select * from Blog where title like \"%" + topic + "%\"");
+        result = stmt.executeQuery("select * from Blog where userID = \""+ bloggerID +"\" and title like \"%" + topic + "%\"");
     }
     else{
-        result = stmt.executeQuery("select * from Blog");
+        result = stmt.executeQuery("select * from Blog where userID = \"" + bloggerID + "\"");
     }
     while (result.next()) {
         Map<String, String> map = new HashMap<>();

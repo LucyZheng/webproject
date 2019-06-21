@@ -10,7 +10,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="mainpage" tagdir="/WEB-INF/tags" %>
 <%
-    String headTitle = "游呢娃子的博客";
+    String userID = (String) session.getAttribute("userID");
+    String bloggerID = request.getParameter("blogger");
+    String headTitle = bloggerID + "的博客";
     String headSignature = "这个人很懒，什么都没有说。";
     String flybyText = "这是用来测试的无意义的一句话啦啦啦。";
     int currentPage = 1;
@@ -21,11 +23,14 @@
     Class.forName("com.mysql.jdbc.Driver");
     Connection connect = DriverManager.getConnection(connectString, "root", "zhuzhiru");
     Statement stmt = connect.createStatement();
-
-    //TODO: Acquire blog from database
+    //取出个性签名
+    ResultSet resultSet = stmt.executeQuery("select signature from User where userID = \"" + bloggerID + "\"");
+    while (resultSet.next())
+        headSignature = resultSet.getString("signature");
+    flybyText = headSignature;
     //获取文章的篇数
     int blogCount = 0;
-    ResultSet resultCount = stmt.executeQuery("select count(*) from Blog");
+    ResultSet resultCount = stmt.executeQuery("select count(*) from Blog where userID = \"" + bloggerID + "\"");
     while (resultCount.next()){
         blogCount = resultCount.getInt(1);
     }
@@ -40,7 +45,7 @@
     //生成
     //从数据库中取出前k篇文章，放入以下形式的List中
     List<Map<String, String> > mainArticle = new ArrayList<>();
-    ResultSet result = stmt.executeQuery("select * from Blog limit " + (currentPage - 1) * 10 + ", 10");
+    ResultSet result = stmt.executeQuery("select * from Blog where userID = \"" + bloggerID + "\" limit " + (currentPage - 1) * 10 + ", 10");
     while (result.next()) {
         Map<String, String> map = new HashMap<>();
         int sign = result.getInt("sign");
@@ -55,26 +60,12 @@
         map.put("fabulousCount", result.getString("likeCount"));
         mainArticle.add(map);
     }
-    /*for (int i = 0;i < 10;i ++) {
-        Map<String, String> stringMap = new HashMap<>();
-        stringMap.put("sign", "原创");
-        stringMap.put("title", "测试" + i);
-        stringMap.put("time", "2019-06-01 23:00");
-        stringMap.put("readCount", Integer.toString(i));
-        stringMap.put("commentCount", Integer.toString(i));
-        stringMap.put("fabulousCount", Integer.toString(i));
-        mainArticle.add(stringMap);
-    }*/
     pageContext.setAttribute("mainArticle", mainArticle);
-    //TODO: Acquire tag clouds from database
     List<String> tag = new ArrayList<>();
     result = stmt.executeQuery("select * from Label");
     while (result.next()) {
         tag.add("#" + result.getString("labelID"));
     }
-    /*for (int i = 1;i < 10;i ++){
-        tag.add("#" + new String(new char[i]).replace("\0","字"));
-    }*/
     pageContext.setAttribute("tag", tag);
 %>
 <!DOCTYPE html>
@@ -98,15 +89,20 @@
             <h1><%=headTitle%></h1>
             <div id="signature"><%=headSignature%></div>
         </div>
+        <div class="login">
+            <c:if test="${userID == null}">您好，请 <a href="sign_in.jsp">登录</a></c:if>
+            <c:if test="${userID != null}">欢迎，<a href="setting.jsp"><%=userID%></a></c:if>
+        </div>
     </header>
     <nav>
         <ul>
-            <li><a href="/">主页</a></li>
-            <li class="first-page"><a href="#">日志</a></li>
-            <li><a href="#">相册</a></li>
+            <li><a href="/?blogger=<%=bloggerID%>">主页</a></li>
+            <li class="first-page"><a href="/blog?blogger=<%=bloggerID%>">日志</a></li>
+            <li><a href="/album_list.jsp?blogger=<%=bloggerID%>">相册</a></li>
             <li><a href="#">留言板</a></li>
             <li><a href="#">我的访客</a></li>
-            <button type="button"></button>
+            <input type="text" id="search" value="文章搜索..." onfocus="if (value =='文章搜索...'){value =''}" onblur="if (value ==''){value='文章搜索...'}" >
+            <button type="button" id="search-btn"></button>
         </ul>
 
     </nav>
@@ -139,11 +135,11 @@
                 <!-- 换页 -->
                 <div class="pagi">
                     <ul class="pagination">
-                        <li><a href="article_list.jsp?page=${currentPage - 1}">«</a></li>
+                        <li><a href="article_list.jsp?blogger=<%=bloggerID%>&page=${currentPage - 1}">«</a></li>
                             <c:forEach var="i" begin="1" end="${pageCount}">
                                 <li><a href="article_list.jsp?page=${i}" class="<c:if test="${i == currentPage}">active</c:if>">${i}</a></li>
                             </c:forEach>
-                        <li><a href="article_list.jsp?page=${currentPage + 1}">»</a></li>
+                        <li><a href="article_list.jsp?blogger=<%=bloggerID%>&page=${currentPage + 1}">»</a></li>
                     </ul>
                 </div>
 

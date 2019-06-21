@@ -1,31 +1,40 @@
-var methodSet = ['GET', 'POST', 'PUT', 'DELETE'];
-var remoteHandler = "localhost:8080/blog/jsonProvider.jsp"
-//function-type request
-function getJSON(context, method, resourceName, data=null, filter=null){
-
-}
-//class-type request
-class JSONRequest{
-    constructor(){}
-    getJSON(context, method, resourceName, filter){    
-        if (context == null){
-            context = this;
+export function getJSON(context, uri, params, onSuccess) {
+    let XMLRequest = new XMLHttpRequest();
+    let request = '';
+    let first = 1;
+    for (let key in params){
+        if (params.hasOwnProperty(key)) {
+            if (first === 1) {
+                request = request + key + "=" + params[key];
+                first = 0;
+            } else
+                request = request + "&" + key + "=" + params[key];
         }
-        if (methodSet.indexOf(method) === -1){
-            throw "Illegal Method";
-        }
-        let XMLRequest = new XMLHttpRequest();
-        let request = remoteHandler + '?resourceName=' + resourceName + '?filter=' + filter;
-        XMLRequest.open(method, request);
-        if (method !== 'GET' && data != null){
-            XMLRequest.send(data);
-        }
-        else{
-            XMLRequest.send();
-        }
-        XMLRequest.onreadystatechange(new function(){
-            if (XMLRequest.readyState === 4 && XMLRequest.status === 200)
-                return JSON.parse(XMLRequest.responseText);
-        });
     }
+    XMLRequest.open('POST', uri);
+    XMLRequest.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    XMLRequest.onreadystatechange = () => {
+        if (XMLRequest.readyState === 4) {
+            onSuccess(XMLRequest.responseText);
+        }
+    };
+    XMLRequest.send(request);
+}
+
+export function postFile(context, uri, params, onSuccess) {
+    let XMLRequest = new XMLHttpRequest();
+    let request = new FormData();
+    for (let key in params){
+        if (params.hasOwnProperty(key)) {
+            request.append(key, params[key]);
+        }
+    }
+    XMLRequest.open('POST', uri);
+    XMLRequest.setRequestHeader("encType", "multipart/form-data");
+    XMLRequest.onreadystatechange = () => {
+        if (XMLRequest.readyState === 4) {
+            onSuccess(XMLRequest.responseText);
+        }
+    };
+    XMLRequest.send(request);
 }

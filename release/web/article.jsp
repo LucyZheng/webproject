@@ -1,3 +1,5 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="article" tagdir="/WEB-INF/tags" %>
 <%--
   Created by IntelliJ IDEA.
   User: williamzheng
@@ -8,10 +10,14 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.util.*,java.sql.*" %>
 <%
+    String userID = (String) session.getAttribute("userID");
+    String bloggerID = "";
     String headTitle = "游呢娃子的博客";
     String headSignature = "这个人很懒，什么都没有说。";
     String flybyText = "这是用来测试的无意义的一句话啦啦啦。";
-    String id = request.getParameter("id");
+    int id = Integer.parseInt(request.getParameter("id"));
+    if (id < 0)
+        id = 0;
     String sign = "";
     String title = "";
     String content = "";
@@ -23,8 +29,15 @@
     Class.forName("com.mysql.jdbc.Driver");
     Connection connect = DriverManager.getConnection(connectString, "root", "zhuzhiru");
     Statement stmt = connect.createStatement();
+    //获取文章的篇数
+    int blogCount = 0;
+    ResultSet resultCount = stmt.executeQuery("select count(*) from Blog where userID = \"" + bloggerID + "\"") ;
+    while (resultCount.next()){
+        blogCount = resultCount.getInt(1);
+    }
+    if (id >= blogCount)
+        id = blogCount - 1;
     ResultSet result = stmt.executeQuery("select * from Blog where blogID = " + id);
-
     while (result.next()){
         int sqlSign = result.getInt("sign");
         if (sqlSign == 0 || sqlSign == 2){
@@ -33,6 +46,8 @@
         else{
             sign = "转载";
         }
+        bloggerID = result.getString("userID");
+        headTitle = bloggerID + "的博客";
         title = result.getString("title");
         content = result.getString("content");
         time = result.getString("time");
@@ -40,6 +55,25 @@
         commentCount = result.getString("commentCount");
         fabulousCount = result.getString("likeCount");
     }
+    List<Map<String, String>> comment = new ArrayList<>();
+    result = stmt.executeQuery("select * from BlogComment, User where BlogComment.userID = User.userID and blogID = " + id);
+    int tempi = 1;
+    while (result.next()){
+        Map<String, String> map = new HashMap<>();
+        map.put("userIcon", result.getString("profilePhoto"));
+        map.put("userName", result.getString("userID"));
+        map.put("floor", String.valueOf(tempi));
+        map.put("time", result.getString("time"));
+        map.put("content", result.getString("content"));
+        comment.add(map);
+        tempi ++;
+    }
+    pageContext.setAttribute("comment", comment);
+    //取出个性签名
+    ResultSet resultSet = stmt.executeQuery("select signature from User where userID = \"" + bloggerID + "\"");
+    while (resultSet.next())
+        headSignature = resultSet.getString("signature");
+    flybyText = headSignature;
 %>
 <!DOCTYPE html>
 <html>
@@ -62,12 +96,16 @@
             <h1><%=headTitle%></h1>
             <div id="signature"><%=headSignature%></div>
         </div>
+        <div class="login">
+            <c:if test="${userID == null}">您好，请 <a href="sign_in.jsp">登录</a></c:if>
+            <c:if test="${userID != null}">欢迎，<%=userID%></c:if>
+        </div>
     </header>
     <nav>
         <ul>
-            <li class="first-page"><a href="#">主页</a></li>
-            <li><a href="#">日志</a></li>
-            <li><a href="#">相册</a></li>
+            <li class="first-page"><a href="/?blogger=<%=bloggerID%>">主页</a></li>
+            <li><a href="/blog?blogger=<%=bloggerID%>">日志</a></li>
+            <li><a href="/album_list.jsp?blogger=<%=bloggerID%>">相册</a></li>
             <li><a href="#">留言板</a></li>
             <li><a href="#">我的访客</a></li>
             <input type="text" id="search" value="文章搜索..." onfocus="if (value =='文章搜索...'){value =''}" onblur="if (value ==''){value='文章搜索...'}" >
@@ -100,10 +138,10 @@
                     <img src="img/comment.png" ><span>评论</span>
                 </div>
                 <div class="last-article">
-                    <img src="img/left.png" ><span>上一篇</span>
+                    <a href="article.jsp?id=<%=id - 1%>"><img src="img/left.png" ><span>上一篇</span></a>
                 </div>
                 <div class="next-article">
-                    <span>下一篇</span><img src="img/right.png" >
+                    <a href="article.jsp?id=<%=id + 1%>"><span>下一篇</span><img src="img/right.png" ></a>
                 </div>
             </div>
             <div class="article-content">
@@ -114,40 +152,15 @@
                     <span>评论</span>
                 </div>
                 <div class="comment-content">
-                    <div class="single-comment">
-                        <div class="personal-commentinf">
-                            <img class="personal-icon" src="img/lengtu3.jpg" >
-                            <div class="personal-name">
-                                <a href="#">鲲鲲</a>
-                            </div>
-                        </div>
-                        <div class="personal-comment">
-                            <div class="floor">
-                                <span id="floor-count"><span >1</span>楼</span>
-                                <span id="comment-time">评论时间：<span>2019-6-15 15:43:24</span></span>
-                            </div>
-                            <div class="personal-comment-content">
-                                鸡你太美！
-                            </div>
-                        </div>
-                    </div>
-                    <div class="single-comment">
-                        <div class="personal-commentinf">
-                            <img class="personal-icon" src="img/lengtu3.jpg" >
-                            <div class="personal-name">
-                                <a href="#">鲲鲲</a>
-                            </div>
-                        </div>
-                        <div class="personal-comment">
-                            <div class="floor">
-                                <span id="floor-count"><span >2</span>楼</span>
-                                <span id="comment-time">评论时间：<span>2019-6-15 15:43:24</span></span>
-                            </div>
-                            <div class="personal-comment-content">
-                                鸡你实在是太美！
-                            </div>
-                        </div>
-                    </div>
+                    <c:forEach items="${comment}" var="i">
+                        <article:Comment
+                                userIcon="${i.get(\"userIcon\")}"
+                                userName="${i.get(\"userName\")}"
+                                floor="${i.get(\"floor\")}"
+                                time="${i.get(\"time\")}"
+                                content="${i.get(\"content\")}"></article:Comment>
+                    </c:forEach>
+
                 </div>
             </div>
             <div class="write-comment">
