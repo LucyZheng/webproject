@@ -5,6 +5,7 @@
 	border-radius: 8px;
 	margin: 5px auto;
 	width:960px;
+	position: relative;
 }
 
 .subalbum>.title {
@@ -139,10 +140,9 @@
 
 /* 换页栏 */
 .pagi {
-	margin-top:30px;
-	float: left;
-	position: relative;
-	left: 50%;
+	position: absolute;
+	left:50%;
+	top:90%;
 }
 
 .pagination {
@@ -178,12 +178,15 @@
 
 /* 隐藏层 */
 #popBox{
-    position: absolute;
+    position: fixed;
     display:none;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    margin: auto;
     width:1000px;
     height:650px;
-    left:18%;
-    top:5%;
     z-index:11;
     background:aliceblue; 
 }
@@ -192,8 +195,11 @@
 	display:none;
 	width:500px;
 	height:300px;
-	left:35%;
-	top:20%;
+	top: 0px;
+	left: 0px;
+	right: 0px;
+	bottom: 0px;
+	margin: auto;
 	z-index:11;
 	background:aliceblue; 
 }
@@ -201,6 +207,25 @@
 	margin:15px;	
 }
 #popBox-comment>.title>span{
+	font-weight: 600;
+}
+#popBox-addphoto{
+	position: fixed;
+	display:none;
+	width:350px;
+	height:200px;
+	top: 0px;
+	left: 0px;
+	right: 0px;
+	bottom: 0px;
+	margin: auto;
+	z-index:11;
+	background:aliceblue; 
+}
+#popBox-addphoto>.title{
+	margin:15px;	
+}
+#popBox-addphoto>.title>span{
 	font-weight: 600;
 }
 .photoinf{
@@ -275,10 +300,13 @@
 }
 
 #popLayer{
-    position: absolute;
+	position: fixed;
+	height: 100%;
+	width: 100%;
     display:none;
     left:0;
     top:0;
+	margin:auto;
     z-index:10;
     background:black;
     -moz-opacity: 0.8;
@@ -295,6 +323,15 @@
 	left: 93%;
 	top:2px;
 }
+.close3{
+	position: absolute;
+	left: 90%;
+	top:2px;
+}
+.close3>a{
+	height: 20px;
+	
+}
 .photo-comment-button{
 	width:80px;
 	height:30px;
@@ -303,4 +340,20 @@
 	border:0;
 	color: white;
 	background-color: skyblue;
+}
+
+#photo-title-p{
+	margin-left: 20px;
+}
+#submit-photo-p,#submit-button-p{
+	margin-left: 20px;
+	margin-top:20px;
+}
+#submit-photo{
+	color:white;
+	border:0;
+	width:70px;
+	height:30px;
+	font-size: 1em;
+	background-color: skyblue ;
 }

@@ -10,8 +10,8 @@
 		<link rel="stylesheet" type="text/css" href="css/album.css">
 		<meta name="Description" content="666的博客,心随你动!" />
 		<script type="text/javascript">
-			function popBox() {
-				var popBox = document.getElementById('popBox');
+			function popBox(id) {
+				var popBox = document.getElementById(id);
 				var popLayer = document.getElementById('popLayer');
 
 				popLayer.style.width = document.body.scrollWidth + "px";
@@ -20,32 +20,15 @@
 				popLayer.style.display = "block";
 				popBox.style.display = "block";
 			}
-			function popBox2() {
-				var popBox = document.getElementById('popBox-comment');
-				var popLayer = document.getElementById('popLayer');
-			
-				popLayer.style.width = document.body.scrollWidth + "px";
-				popLayer.style.height = document.body.scrollHeight + "px";
-			
-				popLayer.style.display = "block";
-				popBox.style.display = "block";
-			}
 
-			function closeBox() {
-				var popBox = document.getElementById('popBox');
+
+			function closeBox(id) {
+				var popBox = document.getElementById(id);
 				var popLayer = document.getElementById('popLayer');
 
 				popLayer.style.display = "none";
 				popBox.style.display = "none";
 
-			}
-			function closeBox2() {
-				var popBox = document.getElementById('popBox-comment');
-				var popLayer = document.getElementById('popLayer');
-			
-				popLayer.style.display = "none";
-				popBox.style.display = "none";
-			
 			}
 		</script>
 
@@ -90,7 +73,7 @@
 							<div class="cover"><img src="img/lengtu3.jpg" class="cover"></div>
 							<div class="album-inf">
 								<div class="album-title">我的相册</div>
-								<button type="button" class="add-photos">
+								<button type="button" class="add-photos" onclick="popBox('popBox-addphoto')">
 									添加照片
 								</button>
 							</div>
@@ -108,11 +91,11 @@
 						<ul class="photo-list">
 							<li class="single-photo-inf" id="single-photo-inf-0" onmouseover="over(this.id)" onmouseout="out(this.id)">
 								<a href="#">
-									<img class="single-photo" src="img/lengtu.jpg" width="150" height="150" onclick="popBox()">
+									<img class="single-photo" src="img/lengtu.jpg" width="150" height="150" onclick="popBox('popBox')">
 								</a>
 								<div class="photo-operation" id="photo-operation-0">
 									<img class="like-icon" src="img/good_32px.png">
-									<img class="comment-icon" src="img/comment_32px.png" onclick="popBox2()">
+									<img class="comment-icon" src="img/comment_32px.png" onclick="popBox('popBox-comment')">
 									<span class="photo-reblog">转载</span>
 								</div>
 								<div class="photo-description">冷兔宝宝超可爱</div>
@@ -141,16 +124,31 @@
 		</div>
 		<div id="popLayer">
 		</div>
+
 		<div id="popBox-comment">
-			<div class="close2"><a href="javascript:void(0)" onclick="closeBox2()"><img src="img/close-popbox.png"></a></div>
+			<div class="close2"><a href="javascript:void(0)" onclick="closeBox('popBox-comment')"><img src="img/close-popbox.png"></a></div>
 			<div class="title"><span>添加评论</span></div>
 			<div class="write-comment">
 				评论框todo
 			</div>
 			<button type="submit" class="photo-comment-button">评论</button>
 		</div>
+		<div id="popBox-addphoto">
+			<div class="close3"><a href="javascript:void(0)" onclick="closeBox('popBox-addphoto')"><img src="img/close-popbox.png"></a></div>
+			<div class="title"><span>添加照片</span></div>
+			<p id="photo-title-p">
+				<label for="photo-title" class="photo-title-label"> 照片标题： </label>
+				<input class="textareas" id="photo-title" name="photo-title" required="required" type="text" />
+			</p>
+			<p id="submit-photo-p">
+				<input type="file" id="test-image-file" name="test" accept="image/gif, image/jpeg, image/png, image/jpg">
+			</p>
+			<p id="submit-button-p">
+				<input type="submit" id="submit-photo" value="上传" />
+			</p>
+		</div>
 		<div id="popBox">
-			<div class="close"><a href="javascript:void(0)" onclick="closeBox()"><img src="img/close-popbox.png"></a></div>
+			<div class="close"><a href="javascript:void(0)" onclick="closeBox('popBox')"><img src="img/close-popbox.png"></a></div>
 			<div class="photoinf">
 				<img src="img/lengtu.jpg">
 				<div class="photo-comment-list">
@@ -186,9 +184,9 @@
 						<button type="button" id="moreclick">点击加载更多...</button>
 					</div>
 				</div>
-				
+
 			</div>
-			
+
 		</div>
 	</body>
 	<script type="text/javascript">
@@ -199,7 +197,7 @@
 			clonedNode.childNodes[3].id = "photo-operation-" + i;
 			sourceNode.parentNode.appendChild(clonedNode);
 		}
-		
+
 
 		function over(id) {
 			var index = id.substr(id.length - 1, 1);
