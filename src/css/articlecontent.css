@@ -91,6 +91,14 @@
 	background-color: #6495ED;
 	border-radius: 8px;
 }
+.labels{
+	position: relative;
+	left:30px;
+	top:4px;
+}
+.labels>span{
+	font-size:small;
+}
 /* 评论区 */
 .subcontent-aricle>.comment{
 	min-height: 100px;
@@ -100,6 +108,7 @@
 	border-bottom:1px solid powderblue;
 }
 .subcontent-aricle>.comment>.comment-title>span{
+	background-color:white;
 	font-size: 0.8em;
 	border-top: 1px solid powderblue;
 	border-left: 1px solid powderblue;
