@@ -1,0 +1,93 @@
+.write-article-content{
+	background-color: white;
+	height:600px;
+}
+.write-article-content>.title{
+	background-color: rgb(235,247,253);
+	height: 30px;
+}
+.write-article-content>.title>span{
+	color:darkblue;
+	font-weight: 600;
+	position: relative;
+	left: 15px;
+	top:2px;
+}
+#article-title{
+	width:250px;
+}
+.input-area,.select-block,.write-block,#make-public{
+	margin-left: 20px;
+	margin-top:20px;
+}
+.select-block{
+	display: flex;
+}
+#add-sign-button{
+	margin-left: 20px;
+	border:0;
+	background-color:skyblue;
+	color:white;
+	width:70px;
+	cursor: pointer;
+}
+#make-public{
+	border:0;
+	width:100px;
+	height:40px;
+	color:white;
+	background-color: #5F9EA0;
+	font-size:1.05em;
+	cursor: pointer;
+}
+#popBox-addsign{
+	position: fixed;
+	display:none;
+	width:300px;
+	height:150px;
+	top: 0px;
+	left: 0px;
+	right: 0px;
+	bottom: 0px;
+	margin: auto;
+	z-index:11;
+	background:aliceblue; 
+}
+#popBox-addsign>.title{
+	margin:15px;	
+}
+#popBox-addsign>.title>span{
+	font-weight: 600;
+}
+#popLayer{
+	position: fixed;
+	height: 100%;
+	width: 100%;
+    display:none;
+    left:0;
+    top:0;
+	margin:auto;
+    z-index:10;
+    background:black;
+    -moz-opacity: 0.8;
+    opacity:.80;
+    filter: alpha(opacity=80);
+}
+.close{
+	position: absolute;
+	left: 89%;
+	top:2px;
+}
+.sign-title-label{
+	margin-left: 20px;
+}
+#submit-sign{
+	margin-left:130px;
+	margin-top:20px;
+	color: white;
+	background-color: skyblue;
+	border:0;
+	width:50px;
+	height: 30px;
+	cursor:pointer;
+}
