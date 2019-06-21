@@ -203,3 +203,15 @@
 .write-block>button:hover{
 	background-color:lightblue;
 }
+#write-textarea {
+	padding: 10px;
+	resize: none;
+	margin-bottom: 10px;
+}
+
+#write-textarea:focus{
+	border: 1px solid;
+	border-color: rgba(82, 168, 236, 0.8);
+	box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1), 0 0 8px rgba(82, 168, 236, 0.6);
+	
+}
