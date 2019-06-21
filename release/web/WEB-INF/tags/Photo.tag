@@ -5,7 +5,7 @@
 
 <li class="single-photo-inf" id="single-photo-inf-${num}" onmouseover="over(this.id)" onmouseout="out(this.id)">
     <a href="#">
-        <img class="single-photo" src="${pictureSrc}" width="150" height="150" onclick="popBox()">
+        <img class="single-photo" src="${pictureSrc}" width="150" height="150" onclick="popBox(this)">
     </a>
     <div class="photo-operation" id="photo-operation-${num}">
         <img class="like-icon" src="img/good_32px.png">
