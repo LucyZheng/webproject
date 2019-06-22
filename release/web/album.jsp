@@ -103,11 +103,11 @@
     <link rel="stylesheet" type="text/css" href="css/album.css">
     <meta name="Description" content="666的博客,心随你动!" />
     <script type="text/javascript">
-        function popBox() {
+        function popBox(obj) {
             var popBox = document.getElementById('popBox');
             var popLayer = document.getElementById('popLayer');
 
-            document.getElementById("pop-img").src = this.src;
+            document.getElementById("pop-img").src = obj.src;
             popLayer.style.width = document.body.scrollWidth + "px";
             popLayer.style.height = document.body.scrollHeight + "px";
 
