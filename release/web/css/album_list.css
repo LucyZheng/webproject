@@ -89,3 +89,52 @@
 .pagination li a:hover:not(.active) {
 	background-color: #ddd;
 }
+/* 隐藏层 */
+#popBox{
+    position: fixed;
+    display:none;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    margin: auto;
+    width:200px;
+    height:100px;
+    z-index:11;
+    background:aliceblue; 
+}
+#popLayer{
+	position: fixed;
+	height: 100%;
+	width: 100%;
+    display:none;
+    left:0;
+    top:0;
+	margin:auto;
+    z-index:10;
+    background:black;
+    -moz-opacity: 0.8;
+    opacity:.80;
+    filter: alpha(opacity=80);
+}
+.input-area{
+	margin-left: 10px;
+	margin-top:10px;
+}
+.close{
+	position: absolute;
+	left: 90%;
+}
+.close>a>img{
+	width:20px;
+	height:20px;
+}
+#create-album{
+	margin-top:10px;
+	color:white;
+	border:0;
+	background: skyblue;
+	width:70px;
+	height:30px;
+	cursor: pointer;
+}

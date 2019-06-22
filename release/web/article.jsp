@@ -29,14 +29,6 @@
     Class.forName("com.mysql.jdbc.Driver");
     Connection connect = DriverManager.getConnection(connectString, "root", "zhuzhiru");
     Statement stmt = connect.createStatement();
-    //获取文章的篇数
-    int blogCount = 0;
-    ResultSet resultCount = stmt.executeQuery("select count(*) from Blog where userID = \"" + bloggerID + "\"") ;
-    while (resultCount.next()){
-        blogCount = resultCount.getInt(1);
-    }
-    if (id >= blogCount)
-        id = blogCount - 1;
     ResultSet result = stmt.executeQuery("select * from Blog where blogID = " + id);
     while (result.next()){
         int sqlSign = result.getInt("sign");
@@ -55,6 +47,14 @@
         commentCount = result.getString("commentCount");
         fabulousCount = result.getString("likeCount");
     }
+    //获取文章的篇数
+    int blogCount = 0;
+    ResultSet resultCount = stmt.executeQuery("select count(*) from Blog where userID = \"" + bloggerID + "\"") ;
+    while (resultCount.next()){
+        blogCount = resultCount.getInt(1);
+    }
+    if (id >= blogCount)
+        id = blogCount - 1;
     List<Map<String, String>> comment = new ArrayList<>();
     result = stmt.executeQuery("select * from BlogComment, User where BlogComment.userID = User.userID and blogID = " + id);
     int tempi = 1;

@@ -241,34 +241,7 @@
             <div class="title">
                 评论列表
             </div>
-            <div class="single-comment" id="single-comment-0">
-                <div class="personal-commentinf">
-                    <img class="personal-icon" src="img/lengtu3.jpg">
-                    <div class="personal-name">
-                        <a href="#">鲲鲲</a>
-                    </div>
-                </div>
-                <div class="personal-comment">
-                    <div class="floor">
-                        <span id="floor-count"><span>1</span>楼</span>
-                        <span id="comment-time">评论时间：<span>2019-6-15 15:43:24</span></span>
-                    </div>
-                    <div class="comment-time-content">
-                        鸡你太美！
-                    </div>
-                </div>
-                <div class="comment-opration">
-                    <div class="reply">
-                        <span>回复</span>
-                    </div>
-                    <div class="delete">
-                        <span>删除</span>
-                    </div>
-                </div>
-            </div>
-            <div class="more">
-                <button type="button" id="moreclick">点击加载更多...</button>
-            </div>
+            
         </div>
 
     </div>
