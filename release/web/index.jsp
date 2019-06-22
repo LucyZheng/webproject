@@ -25,7 +25,12 @@
   while (resultSet.next())
     headSignature = resultSet.getString("signature");
   flybyText = headSignature;
-
+  //获取第一个相册的封面
+  String sideAlbum = "";
+  resultSet = stmt.executeQuery("select * from Album A, Picture P where A.pictureID = P.pictureID and userID = \"" + bloggerID + "\" limit 1");
+  while (resultSet.next()){
+    sideAlbum = resultSet.getString("P.content");
+  }
   //从数据库中取出置顶文章，放入以下形式的List中
   List<Map<String, String> > topArticle = new ArrayList<>();
   ResultSet result = stmt.executeQuery("select * from Blog where (sign = 0 or sign = 1) and userID = \"" + bloggerID + "\"");
@@ -41,14 +46,6 @@
       topArticle.add(map);
     }
   }
-  /*for (int i = 0;i < 4;i ++) {
-    Map<String, String> stringMap = new HashMap<>();
-    stringMap.put("sign", "顶");
-    stringMap.put("title", "测试" + i);
-    stringMap.put("commentCount", Integer.toString(i));
-    stringMap.put("fabulousCount", Integer.toString(i));
-    topArticle.add(stringMap);
-  }*/
   pageContext.setAttribute("topArticle", topArticle);
 
   //TODO: Acquire tag clouds from database
@@ -63,6 +60,16 @@
   }*/
   pageContext.setAttribute("tag", tag);
 
+  //定义script的正则表达式，去除js可以防止注入
+  String scriptRegex="<script[^>]*?>[\\s\\S]*?<\\/script>";
+  //定义style的正则表达式，去除style样式，防止css代码过多时只截取到css样式代码
+  String styleRegex="<style[^>]*?>[\\s\\S]*?<\\/style>";
+  //定义HTML标签的正则表达式，去除标签，只提取文字内容
+  String htmlRegex="<[^>]+>";
+  //定义空格,回车,换行符,制表符
+  String spaceRegex = "\\s*|\t|\r|\n";
+
+
   //TODO: Acquire article list from database
   //从数据库中取出前j篇文章，放入以下形式的List中
   List<Map<String, String> > mainArticle = new ArrayList<>();
@@ -75,7 +82,17 @@
     map.put("blogID", result.getString("blogID"));
     map.put("title", result.getString("title"));
     map.put("img", result.getString("img"));
-    map.put("article", result.getString("content"));
+    String rawContent = result.getString("content");
+
+    // 过滤script标签
+    rawContent = rawContent.replaceAll(scriptRegex, "");
+    // 过滤style标签
+    rawContent = rawContent.replaceAll(styleRegex, "");
+    // 过滤html标签
+    rawContent = rawContent.replaceAll(htmlRegex, "");
+    // 过滤空格等
+    rawContent = rawContent.replaceAll(spaceRegex, "");
+    map.put("article", rawContent);
     map.put("time", result.getString("time"));
     map.put("readCount", result.getString("pageviews"));
     map.put("commentCount", result.getString("commentCount"));
@@ -234,7 +251,7 @@
             <span>相册</span>
           </div>
           <div class="content">
-            <img src="img/lengtu2.jfif">
+            <img src="<%=sideAlbum%>">
           </div>
         </div>
       </aside>

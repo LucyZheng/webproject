@@ -5,6 +5,8 @@
 <%
     String userID = (String) session.getAttribute("userID");
     String bloggerID = request.getParameter("blogger");
+    pageContext.setAttribute("userID", userID);
+    pageContext.setAttribute("bloggerID", bloggerID);
     String headTitle = bloggerID + "的博客";
     String headSignature = "这个人很懒，什么都没有说。";
     String flybyText = "这是用来测试的无意义的一句话啦啦啦。";
@@ -60,7 +62,66 @@
     <link rel="stylesheet" type="text/css" href="css/mainpage_header.css">
     <link rel="stylesheet" type="text/css" href="css/album_list.css">
     <meta name="Description" content="666的博客,心随你动!" />
+    <script type="text/javascript">
+        function popBox() {
+            var popBox = document.getElementById('popBox');
+            var popLayer = document.getElementById('popLayer');
 
+            popLayer.style.width = document.body.scrollWidth + "px";
+            popLayer.style.height = document.body.scrollHeight + "px";
+
+            popLayer.style.display = "block";
+            popBox.style.display = "block";
+        }
+
+
+        function closeBox() {
+            var popBox = document.getElementById('popBox');
+            var popLayer = document.getElementById('popLayer');
+
+            popLayer.style.display = "none";
+            popBox.style.display = "none";
+
+        }
+
+        function createAlbum() {
+            let albumName = document.getElementById("album-name").value;
+            let params = {
+                "albumName": albumName
+            };
+            getJSON(this, 'template/create_album.jsp', params, (data) => {
+                let jsonObj = JSON.parse(data);
+                if (jsonObj['status'] === "success") {
+                    alert("创建成功！");
+                    window.location.reload();
+                } else {
+                    alert("未知错误");
+                }
+            })
+        }
+        function getJSON(context, uri, params, onSuccess) {
+            let XMLRequest = new XMLHttpRequest();
+            let request = '';
+            let first = 1;
+            for (let key in params){
+                if (params.hasOwnProperty(key)) {
+                    if (first === 1) {
+                        request = request + key + "=" + params[key];
+                        first = 0;
+                    } else
+                        request = request + "&" + key + "=" + params[key];
+                }
+            }
+            XMLRequest.open('POST', uri);
+            XMLRequest.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            XMLRequest.onreadystatechange = () => {
+                if (XMLRequest.readyState === 4) {
+                    onSuccess(XMLRequest.responseText);
+                }
+            };
+            XMLRequest.send(request);
+        }
+    </script>
 
 </head>
 <body>
@@ -98,7 +159,7 @@
             <div class="title">
                 <span>相册列表</span>
             </div>
-            <button type="button" class="add-album">
+            <button <c:if test="${userID != bloggerID}">style="display: none;"</c:if> type="button" class="add-album" onclick="popBox()">
                 <span>创建相册</span>
             </button>
             <ul class="album-list">
@@ -126,6 +187,17 @@
 
     </div>
     <footer>&copy;2019-2030 啦啦啦</footer>
+    <div id="popLayer">
+    </div>
+
+    <div id="popBox">
+        <div class="close"><a href="javascript:void(0)" onclick="closeBox()"><img src="img/close-popbox.png"></a></div>
+        <div class="input-area">
+            <label for="album-name" class="album-name-label"> 相册名称： </label>
+            <input class="textareas" id="album-name" name="album-name" required="required" type="text" />
+            <button type="button" id="create-album" onclick="createAlbum()">创建相册</button>
+        </div>
+    </div>
 </div>
 </body>
 </html>

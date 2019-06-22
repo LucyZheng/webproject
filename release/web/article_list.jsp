@@ -12,6 +12,13 @@
 <%
     String userID = (String) session.getAttribute("userID");
     String bloggerID = request.getParameter("blogger");
+    if (bloggerID == null) {
+        if (userID == null)
+            response.sendRedirect("sign_in.jsp");
+        bloggerID = userID;
+    }
+    pageContext.setAttribute("userID", userID);
+    pageContext.setAttribute("bloggerID", bloggerID);
     String headTitle = bloggerID + "的博客";
     String headSignature = "这个人很懒，什么都没有说。";
     String flybyText = "这是用来测试的无意义的一句话啦啦啦。";
@@ -36,6 +43,8 @@
     }
     //每页显示10篇
     int pageCount = (int)Math.ceil(blogCount / 10.0);
+    if (pageCount == 0)
+        pageCount = 1;
     if (currentPage <= 0)
         currentPage = 1;
     else if (currentPage > pageCount)
@@ -49,8 +58,11 @@
     while (result.next()) {
         Map<String, String> map = new HashMap<>();
         int sign = result.getInt("sign");
-        if (sign == 0)
+        if (sign == 0 || sign == 2)
             map.put("sign", "原创");
+        else if (sign == 1 || sign == 3)
+            map.put("sign", "转载");
+        map.put("id", result.getString("blogID"));
         map.put("title", result.getString("title"));
         map.put("img", result.getString("img"));
         map.put("article", result.getString("content"));
@@ -80,7 +92,7 @@
     <link rel="stylesheet" type="text/css" href="css/mainpage_aside.css">
     <link rel="stylesheet" type="text/css" href="css/articlelist.css">
     <meta name="description" content="666的博客,心随你动!" />
-    <script src="js/DOM.js"></script>
+    <script type="module" src="js/DOM.js"></script>
 </head>
 <body>
 <div id="wrapper">
@@ -119,10 +131,11 @@
                 <div class="title">
                     <span>日志列表</span>
                 </div>
-                <button type="button" id="write-article">写日志</button>
+                <button type="button" id="write-article" <c:if test="${userID != bloggerID}">style="display: none;"</c:if> onclick="javascript:window.location.href='write_article.jsp'">写日志</button>
                 <ul class="article-list">
                     <c:forEach items="${mainArticle}" var="i">
                         <mainpage:BlogListItem
+                                id="${i.get(\"id\")}"
                                 sign="${i.get(\"sign\")}"
                                 title="${i.get(\"title\")}"
                                 time="${i.get(\"time\")}"

@@ -138,7 +138,10 @@ export class SignIn{
                     alert("用户名或密码错误");
                 }
                 else if (jsonObj['status'] === 'success') {
-                    window.location.href = document.referrer;
+                    if (document.referrer === window.location.href)
+                        window.location.href = '/';
+                    else
+                        window.location.href = document.referrer;
                 }
                 else{
                     alert('未知错误');

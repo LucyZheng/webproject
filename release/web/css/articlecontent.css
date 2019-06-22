@@ -87,6 +87,19 @@
 	font-size: small;
 }
 
+.like{
+    position: relative;
+}
+
+#reprint-article{
+	border: 0;
+	cursor: pointer;
+	width:80px;
+	color: white;
+	background-color: #6495ED;
+	border-radius: 8px;
+}
+
 /* 评论区 */
 .subcontent-aricle>.comment{
 	min-height: 100px;
@@ -190,4 +203,34 @@
 }
 .write-block>button:hover{
 	background-color:lightblue;
+}
+.HeartAnimation {
+	display: inline-block;
+    position: absolute;
+	background-image: url('../img/web_heart_animation_edge.png');
+	background-position: left;
+	background-repeat: no-repeat;
+	background-size: 2900%;
+    top: 16px;
+	height: 32px;
+	width: 32px;
+	-ms-transform: translate(-50%, -47.5%);
+	transform: translate(-50%, -47.5%)
+}
+.like-active {
+	animation-timing-function: steps(28);
+	animation-name: heart-burst;
+	animation-duration: .8s;
+	animation-iteration-count: 1;
+	display: inline-block;
+	animation-fill-mode: forwards;
+}
+
+@keyframes heart-burst {
+	0% {
+		background-position: left
+	}
+	100% {
+		background-position: right
+	}
 }

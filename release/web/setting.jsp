@@ -58,7 +58,7 @@
         <ul>
             <li class="first-page"><a href="/">主页</a></li>
             <li><a href="/blog">日志</a></li>
-            <li><a href="#">相册</a></li>
+            <li><a href="/album_list.jsp?blogger=<%=userID%>">相册</a></li>
             <li><a href="#">留言板</a></li>
             <li><a href="#">我的访客</a></li>
             <input type="text" id="search" value="文章搜索..." onfocus="if (value =='文章搜索...'){value =''}" onblur="if (value ==''){value='文章搜索...'}" >

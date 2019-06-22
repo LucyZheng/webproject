@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="mainpage" tagdir="/WEB-INF/tags" %>
 <%
+    request.setCharacterEncoding("utf-8");
     String pictureID = request.getParameter("pictureID");
     String connectString = "jdbc:mysql://172.18.35.96:3306/myblogdb?autoReconnect=true&useUnicode=true&characterEncoding=UTF-8";
     Class.forName("com.mysql.jdbc.Driver");
