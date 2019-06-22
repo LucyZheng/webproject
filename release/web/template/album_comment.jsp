@@ -9,7 +9,7 @@
     Connection connect = DriverManager.getConnection(connectString, "root", "zhuzhiru");
     Statement stmt = connect.createStatement();
     List<Map<String, String>> comment = new ArrayList<>();
-    ResultSet resultSet = stmt.executeQuery("select * from PictureComment where pictureID = " + pictureID);
+    ResultSet resultSet = stmt.executeQuery("select * from PictureComment where pictureID = " + pictureID + " limit 2");
     int tempi = 1;
     while (resultSet.next()){
         Map<String, String> map = new HashMap<>();
@@ -23,7 +23,11 @@
     pageContext.setAttribute("comment", comment);
 %>
 <c:forEach items="${comment}" var="i">
-    <mainpage:AlbumComment num="i.get(\"num\")" userID="i.get(\"userID\")" comment="i.get(\"content\")" time="i.get(\"time\")"></mainpage:AlbumComment>
+    <mainpage:AlbumComment
+            num="${i.get(\"num\")}"
+            userID="${i.get(\"userID\")}"
+            comment="${i.get(\"content\")}"
+            time="${i.get(\"time\")}"></mainpage:AlbumComment>
 </c:forEach>
 <div class="more">
     <button type="button" id="moreclick">点击加载更多...</button>

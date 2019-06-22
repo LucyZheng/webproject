@@ -88,10 +88,10 @@
   //TODO: Acquire comment from database
   //从数据库中取出前j条评论，放入以下形式的List中
   List<Map<String, String> > comment = new ArrayList<>();
-  result = stmt.executeQuery("select * from Message where hostID = \""+ bloggerID +"\" limit 4");
+  result = stmt.executeQuery("select * from BlogComment C, Blog B where C.blogID = B.blogID and B.userID = \""+ bloggerID +"\" limit 4");
   while (result.next()) {
     Map<String, String> map = new HashMap<>();
-    map.put("name", result.getString("guestID"));
+    map.put("name", result.getString("C.userID"));
     map.put("message", result.getString("content"));
     comment.add(map);
   }

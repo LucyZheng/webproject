@@ -73,7 +73,7 @@
     while (result.next()) {
         Map<String, String> map = new HashMap<>();
         map.put("num", Integer.toString(tempi));
-        map.put("pictureID", result.getString("pictureID"));
+        map.put("id", result.getString("pictureID"));
         map.put("name", result.getString("name"));
         map.put("pictureSrc", result.getString("content"));
         map.put("fabulousCount", result.getString("likeCount"));
@@ -103,14 +103,42 @@
     <link rel="stylesheet" type="text/css" href="css/album.css">
     <meta name="Description" content="666的博客,心随你动!" />
     <script type="text/javascript">
+        function getHTML(context, uri, params, onSuccess) {
+            let XMLRequest = new XMLHttpRequest();
+            let request = uri;
+            let first = 1;
+            for (let key in params){
+                if (params.hasOwnProperty(key)) {
+                    if (first === 1) {
+                        request = request + "?" + key + "=" + params[key];
+                        first = 0;
+                    } else
+                        request = request + "&" + key + "=" + params[key];
+                }
+            }
+            XMLRequest.open('GET', request);
+            XMLRequest.onreadystatechange = () => {
+                if (XMLRequest.readyState === 4 && XMLRequest.status === 200) {
+                    onSuccess(XMLRequest.responseText);
+                }
+            };
+            XMLRequest.send();
+        }
         function popBox(obj) {
             var popBox = document.getElementById('popBox');
             var popLayer = document.getElementById('popLayer');
 
             document.getElementById("pop-img").src = obj.src;
+            let pictureID = obj.dataset.pictureid;
             popLayer.style.width = document.body.scrollWidth + "px";
             popLayer.style.height = document.body.scrollHeight + "px";
 
+            let params = {
+                "pictureID": pictureID
+            };
+            getHTML(this,'/template/album_comment.jsp', params, (data) => {
+                document.querySelector(".photo-comment-list").insertAdjacentHTML("beforeend", data);
+            });
             popLayer.style.display = "block";
             popBox.style.display = "block";
         }
@@ -201,6 +229,7 @@
                 <ul class="photo-list">
                     <c:forEach items="${pictures}" var="i">
                         <mainpage:Photo
+                                id="${i.get(\"id\")}"
                                 num="${i.get(\"num\")}"
                                 name="${i.get(\"name\")}"
                                 pictureSrc="${i.get(\"pictureSrc\")}"
