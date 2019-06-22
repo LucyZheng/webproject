@@ -91,12 +91,12 @@
 					<div class="write-block">
 						<div class="title">正文：</div>
 						<div id="editor" style="margin:auto; margin-bottom:10px;margin-top: 10px;">
-  							<input type="button" id="bold" style="height:20px; width:auto; font-weight:bold;font-size:20px;" value="粗体" onClick="fontEdit('bold')" />
-							  <input type="button" id="italic" style="height:20px; width:auto; font-style:italic;font-size:20px;" value="斜体" onClick="fontEdit('italic')" />
-							  <input type="button" id="underline" style="height:20px; width:auto; text-decoration:underline;font-size:20px;" value="下划线" onClick="fontEdit('underline')" /> |
-							  <input type="button" style="height:20px; width:auto;font-size:20px;"value="左对齐" onClick="fontEdit('justifyleft')" title="align left" />
-							  <input type="button" style="height:20px; width:auto;font-size:20px;"value="居中" onClick="fontEdit('justifycenter')" title="center" />
-							  <input type="button" style="height:20px; width:auto;font-size:20px;"value="右对齐" onClick="fontEdit('justifyright')" title="align right" /> |
+  							<input type="button" id="bold" style="height:20px; width:auto; font-weight:bold;" value="粗体" onClick="fontEdit('bold')" />
+							  <input type="button" id="italic" style="height:20px; width:auto; font-style:italic;" value="斜体" onClick="fontEdit('italic')" />
+							  <input type="button" id="underline" style="height:20px; width:auto; text-decoration:underline;" value="下划线" onClick="fontEdit('underline')" /> |
+							  <input type="button" style="height:20px; width:auto;" value="左对齐" onClick="fontEdit('justifyleft')" title="align left" />
+							  <input type="button" style="height:20px; width:auto;" value="居中" onClick="fontEdit('justifycenter')" title="center" />
+							  <input type="button" style="height:20px; width:auto;" value="右对齐" onClick="fontEdit('justifyright')" title="align right" /> |
 							  <select id="fonts" onChange="fontEdit('fontName',this[this.selectedIndex].value)">
 							     <option value="Arial" >Arial</option>
 							     <option value="Comic Sans MS">Comic Sans MS</option>
@@ -139,7 +139,7 @@
 		</div>
 	</body>
 <script type="text/javascript">
-    var textbox = document.createElement("iframe");
+	var textbox = document.createElement("iframe");
     textbox.name = textbox.id = "textEditor";
     textbox.style = "margin-top:1rem;width:80%;height:400px;";
     if (textbox.addEventListener){
