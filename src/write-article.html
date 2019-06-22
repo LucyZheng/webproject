@@ -91,12 +91,13 @@
 					<div class="write-block">
 						<div class="title">正文：</div>
 						<div id="editor" style="margin:auto; margin-bottom:10px;margin-top: 10px;">
-  							<input type="button" id="bold" style="height:20px; width:auto; font-weight:bold;" value="粗体" onClick="fontEdit('bold')" />
-							  <input type="button" id="italic" style="height:20px; width:auto; font-style:italic;" value="斜体" onClick="fontEdit('italic')" />
-							  <input type="button" id="underline" style="height:20px; width:auto; text-decoration:underline;" value="下划线" onClick="fontEdit('underline')" /> |
-							  <input type="button" style="height:20px; width:auto;" value="左对齐" onClick="fontEdit('justifyleft')" title="align left" />
-							  <input type="button" style="height:20px; width:auto;" value="居中" onClick="fontEdit('justifycenter')" title="center" />
-							  <input type="button" style="height:20px; width:auto;" value="右对齐" onClick="fontEdit('justifyright')" title="align right" /> |
+  							<input type="button" id="bold" style="height:16px; width:16px; font-weight:bold;" value="" onClick="fontEdit('bold')" title="加粗"/>
+							  <input type="button" id="italic" style="height:16px; width:16px; font-style:italic;" value="" onClick="fontEdit('italic')" title="斜体" />
+							  <input type="button" id="underline" style="height:16px; width:16px; " value="" onClick="fontEdit('underline')" title="下划线" /> |
+							  <input type="button" id="align-left" style="height:16px; width:16px;"  onClick="fontEdit('justifyleft')" title="左对齐" />
+							  <input type="button" id="align-center" style="height:16px; width:16px;"  onClick="fontEdit('justifycenter')" title="居中" />
+							  <input type="button" id="align-right" style="height:16px; width:16px;" v onClick="fontEdit('justifyright')" title="右对齐" />  |
+							  <img src="img/font.png" id="font" >
 							  <select id="fonts" onChange="fontEdit('fontName',this[this.selectedIndex].value)">
 							     <option value="Arial" >Arial</option>
 							     <option value="Comic Sans MS">Comic Sans MS</option>
@@ -115,7 +116,7 @@
 							     <option value="7">7</option>
 							  </select> |
 							  <!--Color: <input class="color {hash:true}" value="000000" onChange="fontEdit('foreColor','#'+this.color)" />-->
-							  颜色: <input class="color" value="000000" onChange="fontEdit('foreColor','#'+this.color)">
+							  <img src="img/color.png" id="color-icon"> <input class="color" value="000000" onChange="fontEdit('foreColor','#'+this.color)" style="border:0;padding-left:5px;">
 							</div>
 					</div>
 					<button type="button" id="make-public">发表日志</button>
@@ -139,14 +140,15 @@
 		</div>
 	</body>
 <script type="text/javascript">
+	
 	var textbox = document.createElement("iframe");
     textbox.name = textbox.id = "textEditor";
-    textbox.style = "margin-top:1rem;width:80%;height:400px;";
+    textbox.style = "margin-top:1rem;width:900px;height:450px;padding: 10px;border:1px solid gray;";
     if (textbox.addEventListener){
         textbox.addEventListener("load",function(e){this.contentWindow.document.designMode = "on";}, false);
     } else if (textbox.attachEvent){
         textbox.attachEvent("load", function(e){this.contentWindow.document.designMode = "on";});
-    }
+    }	
     document.getElementById("editor").appendChild(textbox);
     textEditor.document.designMode="on";
 </script>

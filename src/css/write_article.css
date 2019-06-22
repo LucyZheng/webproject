@@ -125,3 +125,65 @@
 	border-color: rgba(82, 168, 236, 0.8);
 	box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1), 0 0 8px rgba(82, 168, 236, 0.6);
 }
+
+
+/* 富文本 */
+#bold{
+	background: url(../img/bold.png);
+	border: 0;
+	cursor: pointer;
+	margin-right: 5px;
+	position: relative;
+	top:3px;
+}
+#underline{
+	background: url(../img/underline.png);
+	border: 0;
+	cursor: pointer;
+	position: relative;
+	top:3.15px;
+	margin-right: 5px;
+}
+#italic{
+	background: url(../img/italic.png);
+	border: 0;
+	cursor: pointer;
+	margin-right: 5px;
+	position: relative;
+	top:3px;
+}
+#align-left,#align-center,#align-right{
+	border: 0;
+	cursor: pointer;
+	position: relative;
+	top:3px;
+}
+#align-left{
+	background: url(../img/align-left.png);
+	margin-left: 5px;
+}
+#align-center{
+	background: url(../img/align-center.png);
+	margin-left:5px;
+}
+#align-right{
+	background:url(../img/align-right.png);
+	margin:0 5px;
+}
+#size{
+	margin-right:20px;
+}
+#color-icon{
+	width:16px;
+	height:16px;
+	margin-left: 20px;
+	margin-right:5px;
+	position: relative;
+	top:3px;
+}
+#font{
+	margin-left:10px;
+	margin-right:5px;
+	position: relative;
+	top:3px;
+}
