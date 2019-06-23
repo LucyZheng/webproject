@@ -115,7 +115,7 @@
 							     <option value="7">7</option>
 							  </select> |
 							  <!--Color: <input class="color {hash:true}" value="000000" onChange="fontEdit('foreColor','#'+this.color)" />-->
-							  颜色: <input class="color" value="000000" onChange="fontEdit('foreColor','#'+this.color)">
+							  <img src="img/color.png" id="color-icon"> <input class="color" value="000000" onChange="fontEdit('foreColor','#'+this.color)" style="border:0;padding-left:5px;">
 							</div>
 					</div>
 					<button type="button" id="make-public">发表日志</button>
@@ -141,12 +141,12 @@
 <script type="text/javascript">
     var textbox = document.createElement("iframe");
     textbox.name = textbox.id = "textEditor";
-    textbox.style = "margin-top:1rem;width:80%;height:400px;";
+    textbox.style = "margin-top:1rem;width:900px;height:450px;padding: 10px;border:1px solid gray;";
     if (textbox.addEventListener){
         textbox.addEventListener("load",function(e){this.contentWindow.document.designMode = "on";}, false);
     } else if (textbox.attachEvent){
         textbox.attachEvent("load", function(e){this.contentWindow.document.designMode = "on";});
-    }
+    }	
     document.getElementById("editor").appendChild(textbox);
     textEditor.document.designMode="on";
 </script>
