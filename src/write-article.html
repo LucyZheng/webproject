@@ -91,6 +91,7 @@
 					<div class="write-block">
 						<div class="title">正文：</div>
 						<div id="editor" style="margin:auto; margin-bottom:10px;margin-top: 10px;">
+<<<<<<< HEAD
   							<input type="button" id="bold" style="height:16px; width:16px; font-weight:bold;" value="" onClick="fontEdit('bold')" title="加粗"/>
 							  <input type="button" id="italic" style="height:16px; width:16px; font-style:italic;" value="" onClick="fontEdit('italic')" title="斜体" />
 							  <input type="button" id="underline" style="height:16px; width:16px; " value="" onClick="fontEdit('underline')" title="下划线" /> |
@@ -98,6 +99,14 @@
 							  <input type="button" id="align-center" style="height:16px; width:16px;"  onClick="fontEdit('justifycenter')" title="居中" />
 							  <input type="button" id="align-right" style="height:16px; width:16px;" v onClick="fontEdit('justifyright')" title="右对齐" />  |
 							  <img src="img/font.png" id="font" >
+=======
+  							<input type="button" id="bold" style="height:20px; width:auto; font-weight:bold;" value="粗体" onClick="fontEdit('bold')" />
+							  <input type="button" id="italic" style="height:20px; width:auto; font-style:italic;" value="斜体" onClick="fontEdit('italic')" />
+							  <input type="button" id="underline" style="height:20px; width:auto; text-decoration:underline;" value="下划线" onClick="fontEdit('underline')" /> |
+							  <input type="button" style="height:20px; width:auto;" value="左对齐" onClick="fontEdit('justifyleft')" title="align left" />
+							  <input type="button" style="height:20px; width:auto;" value="居中" onClick="fontEdit('justifycenter')" title="center" />
+							  <input type="button" style="height:20px; width:auto;" value="右对齐" onClick="fontEdit('justifyright')" title="align right" /> |
+>>>>>>> Backend
 							  <select id="fonts" onChange="fontEdit('fontName',this[this.selectedIndex].value)">
 							     <option value="Arial" >Arial</option>
 							     <option value="Comic Sans MS">Comic Sans MS</option>
@@ -140,7 +149,10 @@
 		</div>
 	</body>
 <script type="text/javascript">
+<<<<<<< HEAD
 	
+=======
+>>>>>>> Backend
 	var textbox = document.createElement("iframe");
     textbox.name = textbox.id = "textEditor";
     textbox.style = "margin-top:1rem;width:900px;height:450px;padding: 10px;border:1px solid gray;";
